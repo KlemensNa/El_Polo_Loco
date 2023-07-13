@@ -7,7 +7,17 @@ class MovableObject {
     imgCache = [];
     speed = 0.15;
     otherDirection = false;
+    speedY = 0;
+    acceleration = 1.5;
     
+    downToBottom(){
+        setInterval(() => {
+            if(this.y < 420){
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+        }, 50)
+    }
 
     loadImage(path){
         this.img = new Image;

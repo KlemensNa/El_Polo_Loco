@@ -1,9 +1,9 @@
 class Character extends MovableObject {
     x = 300;
-    y = 430;
+    y = 130;
     height = 200;
     width = 100;
-    IMAGES_WALKIG = [
+    IMAGES = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
         'img/2_character_pepe/2_walk/W-23.png',
@@ -17,8 +17,9 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png')
-        this.loadImages(this.IMAGES_WALKIG);                                           //superconstuctor nur einmal aufrufbar, danach einfach mit this.
+        this.loadImages(this.IMAGES);                                           //superconstuctor nur einmal aufrufbar, danach einfach mit this.
         this.animate();
+        this.downToBottom();                                                    //fallen zum Boden
     }
 
     animate() {
@@ -44,7 +45,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (keyboard.RIGHT || keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKIG);
+                this.playAnimation(this.IMAGES);
             }
         }, 60);
     }
