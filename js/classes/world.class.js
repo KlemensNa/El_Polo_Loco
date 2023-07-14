@@ -6,10 +6,9 @@ class World {
     canvas; //erstelle neue Variable Namens canvas
     keyboard;
     camera_x = 100;
-    statusbar = new Statusbar();
-    statusbarHealth = new Statusbar(this.statusbar.IMAGES, 10); 
-    statusbarCoins = new Statusbar(this.statusbar.IMAGES_COINBAR, 100);    
-    statusbarBottle = new Statusbar(this.statusbar.IMAGES_BOTTLEBAR, 190);
+    statusbarHealth = new Statusbar(Statusbar.IMAGES_HEALTHBAR, 10); 
+    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 100);    
+    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 190);
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');                         // Sammlung von Funktionen um im Canvas etwas hinzuzufügen, zu bearbeiten oder ähnliches
@@ -41,11 +40,12 @@ class World {
         this.ctx.translate(this.camera_x, 0);               //Kamera bewegt sich vorm neu zeichnen nach rechts
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.coins);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMaps(this.statusbarCoins);
         this.addToMaps(this.statusbarHealth);
         this.addToMaps(this.statusbarBottle);
-        this.ctx.translate(this.camera_x, 0); 
+        this.ctx.translate(this.camera_x, 0);
         this.addToMaps(this.character);
         this.addObjectsToMap(this.level.enemies);        
                
