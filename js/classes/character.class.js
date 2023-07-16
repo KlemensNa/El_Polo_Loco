@@ -71,8 +71,10 @@ class Character extends MovableObject {
             }
 
             if ((keyboard.SPACE || keyboard.UP) && !this.isAboveGround()) {
-                this.jump();
+                this.jump(this.coins);
             }
+
+            
             this.world.camera_x = -this.x + 200;
         }, 50);
 
@@ -93,7 +95,5 @@ class Character extends MovableObject {
         }, 150 );
     }
 
-    jump() {
-        this.speedY = 25;
-    }
+    
 }

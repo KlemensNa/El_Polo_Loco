@@ -7,6 +7,7 @@ class Chicken extends MovableObject{
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
     currentImg = 0;
+    energy = 20;
 
     constructor(){
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -15,16 +16,28 @@ class Chicken extends MovableObject{
         this.loadImages(this.IMAGES);
         this.animate();
         this.speed = 1 + Math.random() * 1;
+        this.chickenJump();
     }
 
     animate(){
         
         setInterval(() => {
             this.moveLeft();
-        }, 40);  
+        }, 40);
         setInterval(() => {
             this.playAnimation(this.IMAGES);
         },150);
+    }
+
+    chickenJump(){
+        
+        if (!this.isAboveGround()) {
+            setInterval(() => {
+                this.jump();
+            }, 50);                   //Huhn soll springen
+        }
+
+       
     }
 
 

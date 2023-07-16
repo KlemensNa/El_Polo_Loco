@@ -30,13 +30,13 @@
         new Coins(),
         new Coins(),
         new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
+    ],
+    [
+        new Bottle(400, 0),
+        new Bottle(400, 100),
+        new Bottle(400, 200),
+        new Bottle(400, 300),
+        new Bottle(400, 400),
     ]
     
 )

@@ -26,11 +26,18 @@ class DrawableObject{
     }
 
     drawFrame(ctx){
-        if (this instanceof Character || this instanceof Chicken){      // filtert nur Instanzen von Character und Chicken
+        if (this instanceof Chicken || this instanceof Coins || this instanceof Bottle || this instanceof ThrowableObject){      // filtert nur Instanzen von Character und Chicken
         ctx.beginPath();
         ctx.lineWidth = '4';
         ctx.strokeStyle = 'green';
         ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+        }
+        if (this instanceof Character){
+            ctx.beginPath();
+        ctx.lineWidth = '4';
+        ctx.strokeStyle = 'green';
+        ctx.rect(this.x , this.y + (this.height * 0.3), this.width, this.height - (this.height * 0.3));
         ctx.stroke();
         }
     }
