@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    speedX = 0;    
+    speedX = 0;
     acceleration = 1.5;
     fallingBorder;
     energy = 100;
@@ -35,35 +35,29 @@ class MovableObject extends DrawableObject {
     }
 
     jump(coins) {
-        this.speedY = 25 + (coins * 1.5);
+        this.speedY = 25 + (coins * 1.8);
     }
-
-    // checkBottomContact(){
-    //     if (this.y == this.fallingBorder){
-    //         this.speedY = (this.coins * 0.2);
-    //     }
-    // }
 
     //character.isColliding(chicken)
     isColliding(mo) {
         if (this instanceof Character) {
             return this.x + this.width > mo.x &&                    // rechts oben mit linksOben-mo
                 (this.y + (this.height * 0.3)) + (this.height - (this.height * 0.3)) > mo.y &&                      // links unten mit linksOben-mo 
-                this.x < mo.x &&                                    // links oben mit linksOben-mo
+                this.x < mo.x + mo.width &&                                    // links oben kleiner rechtsOben-mo
                 (this.y + (this.height * 0.3)) < mo.y + mo.height                           // links oben mit rechts unten
         } else {
             return this.x + this.width > mo.x &&                    // rechts oben mit linksOben-mo
                 this.y + this.height > mo.y &&                      // links unten mit linksOben-mo 
-                this.x < mo.x &&                                    // links oben mit linksOben-mo
-                this.y < mo.y + mo.height                           // links oben mit rechts unten
+                this.x < mo.x + mo.width &&                                    // links oben mit linksOben-mo
+                this.y < mo.y + mo.height;                           // links oben mit rechts unten
         }
     }
 
     // isColliding (mo) {
-    //     return  (this.x + this.width) >= obj.x && this.x <= (obj.X + obj.width) && 
-    //             (this.x + this.offsetY + this.height) >= obj.Y &&
-    //             (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
-    //             obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+    //     return  (this.x + this.width) >= mo.x && this.x <= (mo.X + mo.width) && 
+    //             (this.x + this.offsety + this.height) >= mo.y &&
+    //             (this.y + this.offsety) <= (mo.y + mo.height) && 
+    //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // }
 
     hit() {
@@ -96,7 +90,7 @@ class MovableObject extends DrawableObject {
 
     hasAdded() {
         let timespan = (new Date().getTime() - this.lastAdd) / 1000;
-        return timespan < 0.1;
+        return timespan < 0.05;
     }
 
     addCoin() {
@@ -106,14 +100,20 @@ class MovableObject extends DrawableObject {
             console.log('Coins:', this.coins);
         }
     }
+    hitEnemy(enemy, enemies, index) {
+        if (!this.hurtEnemy()) {
+            enemy.energy -= 20;
+            this.lastHit = new Date().getTime();
+            if (enemy.energy <= 0) {
+                enemy.energy = 0;
+                enemies.splice(index, 1);
+            }
+        }
+    }
 
-    // enemyIsHurt(){
-    //     if(this.enemies.energy = 0){
-    //         const index = this.level.enemies.findIndex(bottle => this.level.enemies.isColliding(bottle));
-    //             if (index !== -1) {
-    //                 this.level.enemies.splice(index, 1);
-    //             }
-    //     }
-    // }
+    hurtEnemy(){
+        let timespan = (new Date().getTime() - this.lastHit) / 1000;
+        return timespan < 1;
+    }
 
 }

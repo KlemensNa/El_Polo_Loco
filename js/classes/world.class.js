@@ -27,7 +27,7 @@ class World {
     runInterval() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();           
+            this.checkThrowObjects();
         }, 100);
     }
 
@@ -37,6 +37,7 @@ class World {
             this.salsaBottles.push(bottle);
             this.character.bottles--;
             this.statusbarBottle.addBottle(this.character.bottles);
+            console.log()
         }
     }
 
@@ -68,14 +69,19 @@ class World {
                 this.statusbarCoins.addBottle(this.character.coins);
             }
         });
-        // this.level.bottles.forEach((bottle) => {
-        //     if (this.level.enemies.isColliding(bottle)) {
-        //         enemyIsHurt();
-        //         // this.statusbarCoins.addBottle(this.character.coins);
-        //     }
-        // });
+        this.level.enemies.forEach((enemy) => {
+            this.salsaBottles.forEach((bottle) => {
+                if (bottle.isColliding(enemy)) {
+                    bottle.speedY = 0;
+                    bottle.speedX = 0;
+                    const index = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
+                    enemy.hitEnemy(enemy, this.level.enemies, index, );
+                }
+            })
+        });
     }
 
+    // hier
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);               //Kamera bewegt sich vorm neu zeichnen nach rechts
