@@ -25,11 +25,11 @@
         new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 969*2),
             
     ],
-    [   new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
+    [   new Coins(600, 0),
+        new Coins(600, 100),
+        new Coins(600, 200),
+        new Coins(600, 300),
+        new Coins(600, 400),
     ],
     [
         new Bottle(400, 0),

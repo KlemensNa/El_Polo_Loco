@@ -10,6 +10,7 @@ class World {
     statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 100);
     statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 190);
     salsaBottles = [];
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');                         // Sammlung von Funktionen um im Canvas etwas hinzuzufügen, zu bearbeiten oder ähnliches
@@ -32,13 +33,18 @@ class World {
     }
 
     checkThrowObjects() {
-        if (keyboard.THROW && this.character.bottles > 0) {
+        if (keyboard.THROW && this.character.bottles > 0 && !this.hasThrown()) {
             let bottle = new ThrowableObject(this.character.x + this.character.width, this.character.y + (this.character.height / 2));
             this.salsaBottles.push(bottle);
             this.character.bottles--;
             this.statusbarBottle.addBottle(this.character.bottles);
-            console.log()
+            this.lastThrow = new Date().getTime();
         }
+    }
+
+    hasThrown() {
+        let timespan = (new Date().getTime() - this.lastThrow) / 1000;
+        return timespan < 0.6;
     }
 
     checkCollisions() {
@@ -80,6 +86,8 @@ class World {
             })
         });
     }
+
+    
 
     // hier
     draw() {

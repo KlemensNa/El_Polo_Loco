@@ -27,35 +27,39 @@ class ThrowableObject extends MovableObject {
         this.x = x;
         this.y = y;
         this.fallingBorder = 660 - this.height;
-        // this.loadImages(this.IMAGES_THROW);
-        // this.loadImages(this.IMAGES_SPLASH);
+        this.loadImages(this.IMAGES_THROW);
+        this.loadImages(this.IMAGES_SPLASH);
         this.throw(this.x, this.y);
-        this.smash();
-        // this.becomeSlower();
     }
 
 
     throw(x, y) {
-                this.x = x;
-                this.y = y;
-                this.speedY = 20;
-                this.speedX = 30;
-                this.downToBottom();
-                setInterval(() => {
-                    this. x += this.speedX;
-                }, 50);
-    }
-
-    smash(){
+        this.x = x;
+        this.y = y;
+        this.speedY = 20;
+        this.speedX = 30;
+        this.downToBottom();
         setInterval(() => {
-            if (!this.isAboveGround()){
+            this.x += this.speedX;
+        }, 50);
+
+        setInterval(() => {
+            if (!this.isAboveGround() || this.speedX == 0) {        // kommt auf dem Boden auf
                 this.speedX = 0;
-                this.loadImage('img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png');
-                
+                this.playAnimation(this.IMAGES_SPLASH);
+                this.deleteBottle();
             }
-            
-        }, 50)
+            else {
+                this.playAnimation(this.IMAGES_THROW)
+            }
+        }, 100)
     }
 
-    
+    deleteBottle() {      
+        setTimeout(() => {delete this.x}, 200);
+    }
+
+
+
+
 }
