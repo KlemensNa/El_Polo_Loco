@@ -10,6 +10,8 @@ class World {
     statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 100);
     statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 190);
     salsaBottles = [];
+    endboss = this.level.enemies.length - 1;
+    
     
 
     constructor(canvas, keyboard) {
@@ -29,6 +31,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkAttackRange();
         }, 100);
     }
 
@@ -39,6 +42,7 @@ class World {
             this.character.bottles--;
             this.statusbarBottle.addBottle(this.character.bottles);
             this.lastThrow = new Date().getTime();
+            this.character.keyPushed = new Date().getTime(); 
         }
     }
 
@@ -81,10 +85,18 @@ class World {
                     bottle.speedY = 0;
                     bottle.speedX = 0;
                     const index = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
-                    enemy.hitEnemy(enemy, this.level.enemies, index, );
+                    enemy.hitEnemy(this.level.enemies, index);
                 }
             })
         });
+    }
+
+    checkAttackRange(){
+        if(this.level.enemies[this.endboss].readyToAttack(this.character)){
+            this.level.enemies[this.endboss].attack();
+        }else{
+            this.level.enemies[this.endboss].dontAttack();
+        }
     }
 
     

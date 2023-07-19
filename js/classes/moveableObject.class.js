@@ -10,6 +10,7 @@ class MovableObject extends DrawableObject {
     bottles = 0;
     coins = 0;
     lastHit = 0;
+    
 
     downToBottom() {
         setInterval(() => {
@@ -53,12 +54,26 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     // isColliding (mo) {
     //     return  (this.x + this.width) >= mo.x && this.x <= (mo.X + mo.width) && 
     //             (this.x + this.offsety + this.height) >= mo.y &&
     //             (this.y + this.offsety) <= (mo.y + mo.height) && 
     //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // }
+
+    readyToAttack(mo){
+        return this.x - (mo.x + mo.width) < 100
+    }
+
+    attack(){        
+        this.range = 1;
+        console.log("yeah")
+    }
+
+    dontAttack(){
+        this.range = 0;
+    }
 
     hit() {
         if (!this.isHurt()) {
@@ -100,13 +115,15 @@ class MovableObject extends DrawableObject {
             console.log('Coins:', this.coins);
         }
     }
-    hitEnemy(enemy, enemies, index) {
+
+    hitEnemy(enemies, index) {
         if (!this.hurtEnemy()) {
-            enemy.energy -= 20;
+            this.energy -= 20;
             this.lastHit = new Date().getTime();
-            if (enemy.energy <= 0) {
-                enemy.energy = 0;
-                enemies.splice(index, 1);
+            if (this.energy <= 0) {
+                this.energy = 0;
+                // this.dendboss--;
+                setTimeout(() => {enemies.splice(index, 1)}, 600);
             }
         }
     }
@@ -115,5 +132,14 @@ class MovableObject extends DrawableObject {
         let timespan = (new Date().getTime() - this.lastHit) / 1000;
         return timespan < 1;
     }
+
+    noKeyPushed(){
+        let timespan = (new Date().getTime() - this.keyPushed) / 1000;
+        return timespan > 5;
+    }
+
+    
+
+
 
 }

@@ -33,10 +33,24 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
+    ];
+    IMAGES_SLEEP = [
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png',
+
     ]
     
     world;                                 // Variable in der alle varaiablen vom Object World gespecihert sind (s. Klasse World)
     walking_sound = new Audio('audio/running.mp3');
+    keyPushed;
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');      //superconstuctor nur einmal aufrufbar, danach einfach mit this.
@@ -48,6 +62,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_SLEEP);
         this.animate();
         this.downToBottom();                                                    //fallen zum Boden
     }
@@ -55,9 +70,11 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+            
             if (keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.walking_sound.play();
+                this.keyPushed = new Date().getTime();
             }
             else if (keyboard.LEFT) {
                 this.otherDirection = true;
@@ -65,6 +82,7 @@ class Character extends MovableObject {
                     this.moveLeft();
                 }
                 this.walking_sound.play();
+                this.keyPushed = new Date().getTime();
             } else {
                 this.walking_sound.pause();
                 this.walking_sound.currentTime = 0;
@@ -72,7 +90,13 @@ class Character extends MovableObject {
 
             if ((keyboard.SPACE || keyboard.UP) && !this.isAboveGround()) {
                 this.jump(this.coins);
+                this.keyPushed = new Date().getTime();
             }
+            if(this.noKeyPushed() && !this.isDead() && !this.isHurt()){
+                this.playAnimation(this.IMAGES_SLEEP)
+            }
+
+            
 
             
             this.world.camera_x = -this.x + 200;
