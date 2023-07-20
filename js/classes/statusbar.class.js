@@ -25,7 +25,12 @@ class Statusbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
     static IMAGES_BOSSBAR = [
-        'img/7_statusbars/2_statusbar_endboss/orange.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
+        'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
     ];
 
     Images = [];
@@ -35,14 +40,14 @@ class Statusbar extends DrawableObject {
     amountBottles = 0;
 
 
-    constructor(bilder, y) {
+    constructor(bilder, x, y) {
         super();
         this.Images = bilder;
         this.loadImage(this.Images[0]);
         this.loadImages(this.Images);
         this.setPercentage(100);
         this.addBottle(0);
-        this.x = 10;
+        this.x = x;
         this.y = y;    
         this.height = 80;
         this.width = 300;                

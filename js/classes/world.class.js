@@ -6,9 +6,10 @@ class World {
     canvas; //erstelle neue Variable Namens canvas
     keyboard;
     camera_x = 100;
-    statusbarHealth = new Statusbar(Statusbar.IMAGES_HEALTHBAR, 10);
-    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 100);
-    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 190);
+    statusbarHealth = new Statusbar(Statusbar.IMAGES_HEALTHBAR, 10, 10);
+    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 10, 100);
+    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 10, 190);
+    statusbarBoss = new Statusbar(Statusbar.IMAGES_BOSSBAR, 640, 10)
     salsaBottles = [];
     endboss = this.level.enemies.length - 1;
     
@@ -32,12 +33,20 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkAttackRange();
+            this.checkCharInBack();
         }, 100);
     }
 
     checkThrowObjects() {
-        if (keyboard.THROW && this.character.bottles > 0 && !this.hasThrown()) {
-            let bottle = new ThrowableObject(this.character.x + this.character.width, this.character.y + (this.character.height / 2));
+        if (keyboard.THROW && this.character.bottles && !this.character.otherDirection > 0 && !this.hasThrown()) {
+            let bottle = new ThrowableObject(this.character.x + this.character.width, this.character.y + (this.character.height / 2), 25);
+            this.salsaBottles.push(bottle);
+            this.character.bottles--;
+            this.statusbarBottle.addBottle(this.character.bottles);
+            this.lastThrow = new Date().getTime();
+            this.character.keyPushed = new Date().getTime(); 
+        } else if (keyboard.THROW && this.character.bottles && this.character.otherDirection > 0 && !this.hasThrown())  {
+            let bottle = new ThrowableObject(this.character.x , this.character.y + (this.character.height / 2), -25);
             this.salsaBottles.push(bottle);
             this.character.bottles--;
             this.statusbarBottle.addBottle(this.character.bottles);
@@ -86,6 +95,11 @@ class World {
                     bottle.speedX = 0;
                     const index = this.level.enemies.findIndex(enemy => bottle.isColliding(enemy));
                     enemy.hitEnemy(this.level.enemies, index);
+                    if (enemy instanceof Endboss){
+                        console.log('Hola')
+                        this.statusbarBoss.setPercentage(enemy.energy);
+                    }
+
                 }
             })
         });
@@ -97,9 +111,17 @@ class World {
         }else{
             this.level.enemies[this.level.enemies.length - 1].dontAttack();
         }
-    }
+    }    
 
-    
+    checkCharInBack(){
+        if((this.level.enemies[this.level.enemies.length - 1].x + 
+        this.level.enemies[this.level.enemies.length - 1].width/2) < (this.character).x){
+            this.level.enemies[this.level.enemies.length - 1].charInBack();
+            console.log("yeah")
+        } else {
+            this.level.enemies[this.level.enemies.length - 1].charInFront();
+        };
+    }
 
     // hier
     draw() {
@@ -114,6 +136,7 @@ class World {
         this.addToMaps(this.statusbarCoins);
         this.addToMaps(this.statusbarHealth);
         this.addToMaps(this.statusbarBottle);
+        this.addToMaps(this.statusbarBoss);
         this.ctx.translate(this.camera_x, 0);
         this.addToMaps(this.character);
         this.addObjectsToMap(this.level.enemies);
@@ -137,14 +160,14 @@ class World {
 
 
     addToMaps(mo) {
-        if (mo.otherDirection) {
+        if (mo.otherDirection || mo.flipBoss) {
             this.flipImage(mo);
         }
 
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
 
-        if (mo.otherDirection) {
+        if (mo.otherDirection || mo.flipBoss) {
             this.flipImageBack(mo);
         }
 

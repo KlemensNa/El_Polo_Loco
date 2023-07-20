@@ -54,13 +54,20 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
     // isColliding (mo) {
     //     return  (this.x + this.width) >= mo.x && this.x <= (mo.X + mo.width) && 
-    //             (this.x + this.offsety + this.height) >= mo.y &&
-    //             (this.y + this.offsety) <= (mo.y + mo.height) && 
+    //             (this.x + this.offset.y + this.height) >= mo.y &&
+    //             (this.y + this.offset.y) <= (mo.y + mo.height) && 
     //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // }
+
+    charInBack(){
+        this.flipBoss = 1;
+    }
+
+    charInFront(){
+        this.flipBoss = 0;
+    }
 
     readyToAttack(mo){
         return this.x - (mo.x + mo.width) < 270
@@ -68,7 +75,7 @@ class MovableObject extends DrawableObject {
 
     attack(){        
         this.range = 1;
-        console.log("yeah")
+        
     }
 
     dontAttack(){
@@ -94,6 +101,8 @@ class MovableObject extends DrawableObject {
         let timespan = (new Date().getTime() - this.lastHit) / 1000;
         return timespan < 1;
     }
+
+    
 
     addBottles() {
         if (this.bottles < 6 && !this.hasAdded()) {

@@ -2,8 +2,9 @@ class Endboss extends MovableObject{
     
     height = 400;
     width = 400;
-    energy = 40;
+    energy = 100;
     range;
+    flipBoss;
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -70,8 +71,14 @@ class Endboss extends MovableObject{
                 this.speed = 5;
                 this.playAnimation(this.IMAGES_HURT);
             }
+            else if(this.flipBoss == 1){
+                this.moveRight();
+                this.playAnimation(this.IMAGES_WALK);
+                this.otherDirection = true;
+            }
             else{
                 this.moveLeft();
+                this.otherDirection = false;
                 this.speed = 5;
                 this.playAnimation(this.IMAGES_WALK);
             }
