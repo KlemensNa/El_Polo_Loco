@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
     // }
 
     readyToAttack(mo){
-        return this.x - (mo.x + mo.width) < 100
+        return this.x - (mo.x + mo.width) < 270
     }
 
     attack(){        

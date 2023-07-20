@@ -7,12 +7,11 @@ class Bottle extends DrawableObject{
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
 
-    constructor(x, y){
+    constructor(x){
         super().loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
         this.width = 100;
         this.height = 100;
         this.x = x;
-        this.y = y;
         // this.x = 200 + (Math.random()* 2000); 
         // this.y = 650 - this.height; 
         this.loadImages(this.IMAGES);

@@ -92,10 +92,10 @@ class World {
     }
 
     checkAttackRange(){
-        if(this.level.enemies[this.endboss].readyToAttack(this.character)){
-            this.level.enemies[this.endboss].attack();
+        if(this.level.enemies[this.level.enemies.length - 1].readyToAttack(this.character)){
+            this.level.enemies[this.level.enemies.length - 1].attack();
         }else{
-            this.level.enemies[this.endboss].dontAttack();
+            this.level.enemies[this.level.enemies.length - 1].dontAttack();
         }
     }
 
