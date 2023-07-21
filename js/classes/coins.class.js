@@ -4,6 +4,12 @@ class Coins extends DrawableObject{
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png'
     ];
+    offset = {
+        top: 50,
+        right: 48,
+        bottom: 50,
+        left: 48,
+    }
 
     constructor(x, y){
         super().loadImage('img/8_coin/coin_2.png');

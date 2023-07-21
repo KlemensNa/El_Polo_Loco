@@ -3,6 +3,12 @@ class BottleBottom extends MovableObject{
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
     ];
+    offset = {
+        top: 20,
+        right: 20,
+        bottom: 10,
+        left: 40,
+    }
 
     constructor(x){
         super();
@@ -14,6 +20,6 @@ class BottleBottom extends MovableObject{
         this.y = 650 - this.height; 
         this.loadImages(this.IMAGES);
     }
-
     
 }
+

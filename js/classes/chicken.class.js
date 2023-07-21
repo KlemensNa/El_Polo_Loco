@@ -8,6 +8,12 @@ class Chicken extends MovableObject {
     ];
     currentImg = 0;
     energy = 20;
+    offset = {
+        top: 10,
+        right: 20,
+        bottom: 20,
+        left: 10,
+    }
 
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -15,7 +21,11 @@ class Chicken extends MovableObject {
         this.x = x;
         this.loadImages(this.IMAGES);
         this.animate();
+        this.jumpen();
+        this.downToBottom();
+        this.fallingBorder = 640 - this.height;
         this.speed = 1 + Math.random() * 1;
+        this.jumptime;
     }
 
     animate() {
@@ -35,6 +45,20 @@ class Chicken extends MovableObject {
 
         }, 150);
 
+        
     }
+
+    jumpen(){
+        setInterval(() => {
+            this.jumptime = 1 + Math.random() * 5;
+            if(!this.isAboveGround() && !this.isDead() && !this.isHurt()){      
+                setTimeout(() => {
+                    this.speedY = 25
+                }, this.jumptime);          
+                           
+            }
+        }, 2000);
+    }
+
 
 }

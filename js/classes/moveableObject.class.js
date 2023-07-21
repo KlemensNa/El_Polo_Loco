@@ -39,27 +39,13 @@ class MovableObject extends DrawableObject {
         this.speedY = 25 + (coins * 1.8);
     }
 
-    //character.isColliding(chicken)
+    
     isColliding(mo) {
-        if (this instanceof Character) {
-            return this.x + this.width > mo.x &&                    // rechts oben mit linksOben-mo
-                (this.y + (this.height * 0.3)) + (this.height - (this.height * 0.3)) > mo.y &&                      // links unten mit linksOben-mo 
-                this.x < mo.x + mo.width &&                                    // links oben kleiner rechtsOben-mo
-                (this.y + (this.height * 0.3)) < mo.y + mo.height                           // links oben mit rechts unten
-        } else {
-            return this.x + this.width > mo.x &&                    // rechts oben mit linksOben-mo
-                this.y + this.height > mo.y &&                      // links unten mit linksOben-mo 
-                this.x < mo.x + mo.width &&                                    // links oben mit linksOben-mo
-                this.y < mo.y + mo.height;                           // links oben mit rechts unten
-        }
-    }
-
-    // isColliding (mo) {
-    //     return  (this.x + this.width) >= mo.x && this.x <= (mo.X + mo.width) && 
-    //             (this.x + this.offset.y + this.height) >= mo.y &&
-    //             (this.y + this.offset.y) <= (mo.y + mo.height) && 
-    //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    // }
+            return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
+                this.y + this.height - this.offset.bottom  > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
+                this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
+                this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom                        // links oben mit rechts untenda
+            }
 
     charInBack(){
         this.flipBoss = 1;
@@ -70,7 +56,7 @@ class MovableObject extends DrawableObject {
     }
 
     readyToAttack(mo){
-        return this.x - (mo.x + mo.width) < 270
+        return this.x - (mo.x + mo.width) < 350
     }
 
     attack(){        
@@ -131,7 +117,7 @@ class MovableObject extends DrawableObject {
             this.lastHit = new Date().getTime();
             if (this.energy <= 0) {
                 this.energy = 0;
-                // this.dendboss--;
+                
                 setTimeout(() => {enemies.splice(index, 1)}, 600);
             }
         }

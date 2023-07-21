@@ -51,6 +51,12 @@ class Character extends MovableObject {
     world;                                 // Variable in der alle varaiablen vom Object World gespecihert sind (s. Klasse World)
     walking_sound = new Audio('audio/running.mp3');
     keyPushed;
+    offset = {
+        top: 110,
+        right: 35,
+        bottom: 12,
+        left: 35,
+    }
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');      //superconstuctor nur einmal aufrufbar, danach einfach mit this.

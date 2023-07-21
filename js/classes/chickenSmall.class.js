@@ -6,6 +6,12 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ]
     energy = 20;
+    offset = {
+        top: 10,
+        right: 30,
+        bottom: 25,
+        left: 15,
+    };
 
 
     constructor(x) {

@@ -49,8 +49,8 @@ class Statusbar extends DrawableObject {
         this.addBottle(0);
         this.x = x;
         this.y = y;    
-        this.height = 80;
-        this.width = 300;                
+        this.height = 60;
+        this.width = 250;                
     }
 
 

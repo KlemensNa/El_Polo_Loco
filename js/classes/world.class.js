@@ -7,9 +7,9 @@ class World {
     keyboard;
     camera_x = 100;
     statusbarHealth = new Statusbar(Statusbar.IMAGES_HEALTHBAR, 10, 10);
-    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 10, 100);
-    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 10, 190);
-    statusbarBoss = new Statusbar(Statusbar.IMAGES_BOSSBAR, 640, 10)
+    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 10, 80);
+    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 10, 150);
+    statusbarBoss = new Statusbar(Statusbar.IMAGES_BOSSBAR, 700, 10)
     salsaBottles = [];
     endboss = this.level.enemies.length - 1;
     
