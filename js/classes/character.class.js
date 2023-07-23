@@ -1,6 +1,5 @@
 class Character extends MovableObject {
-    height = 300;
-    width = 150;
+    
     IMAGES = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -60,6 +59,8 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');      //superconstuctor nur einmal aufrufbar, danach einfach mit this.
+        this.height = 300;
+        this.width = 150;
         this.y = 640 - this.height;
         this.x = 200;
         this.speed = 15;
@@ -74,8 +75,8 @@ class Character extends MovableObject {
     }
 
     animate() {
-
-        setInterval(() => {
+        
+        setInterval(() => {     
             
             if (keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -100,11 +101,8 @@ class Character extends MovableObject {
             }
             if(this.noKeyPushed() && !this.isDead() && !this.isHurt()){
                 this.playAnimation(this.IMAGES_SLEEP)
-            }
+            }     
 
-            
-
-            
             this.world.camera_x = -this.x + 200;
         }, 50);
 

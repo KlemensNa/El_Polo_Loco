@@ -7,7 +7,7 @@
         // new ChickenSmall(900), 
         // new ChickenSmall(1300), 
         // new ChickenSmall(), 
-        // new Endboss(),
+        new Endboss(),
     ],
     [
         new Clouds(),
@@ -31,11 +31,11 @@
             
     ],
     [   
-        new Coins(600, 50),
-        new Coins(800, 150),
-        new Coins(1000, 250),
-        new Coins(1200, 350),
-        new Coins(1400, 450),
+        new Coins(200, 50),
+        new Coins(200, 150),
+        new Coins(2000, 250),
+        new Coins(200, 350),
+        new Coins(200, 450),
     ],
     [
         new Bottle(400),
@@ -50,10 +50,10 @@
         new BottleBottom(2200),
     ],
     [
-        // new Brick(500, 500),
-        // new Brick(570, 500),
-        // new Brick(640, 500),
-        new Brick(710, 350),
+        new Brick(500, 370),
+        new Brick(1100, 370),
+        new Brick(840, 370),
+        // new Brick(710, 350),
     ]
     
 )

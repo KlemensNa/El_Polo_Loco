@@ -64,10 +64,10 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
         this.fallingBorder = 640 - this.height;
         this.x = 2200;
-        this.animate();
-        this.jumpen();
-        this.downToBottom(); 
-        this.speed = 3;
+        // this.animate();
+        // this.jumpen();
+        // this.downToBottom(); 
+        // this.speed = 3;
     }
 
     animate(){      

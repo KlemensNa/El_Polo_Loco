@@ -34,7 +34,7 @@ class World {
             this.checkThrowObjects();
             this.checkAttackRange();
             this.checkCharInBack();
-        }, 30);
+        }, 16);
     }
 
     checkThrowObjects() {
@@ -63,25 +63,34 @@ class World {
     checkCollisions() {
         this.level.brick.forEach((bric) => {
             if (this.character.jumpOn(bric)) {
-                console.log(this.character.fallingBorder);
-                this.speedY = 0;       
+                     
                 this.character.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                
                 // const index = this.level.brick.find(bric => this.character.jumpOn(bric));
-                this.character.fallingBorder = bric.y - this.character.height - this.character.offset.bottom + bric.offset.top;
-                console.log(this.character.fallingBorder);
+                // console.log(index);
+                this.character.fallingBorder = bric.y - this.character.height + bric.offset.top;
+                this.speedY = 0;  
             } 
             else {
                 this.character.fallingBorder = 640 - this.character.height;
             }
         });
-        // this.level.brick.forEach((bric) => {
-        //     if (this.character.jumpUnder(bric)) {
-        //         console.log("au");                
-        //         // const index = this.level.brick.find(bric => this.character.jumpUnder(bric));
-        //         this.character.fallingBorder = this.character.speedY = 0;
-        //     } 
-        // });
+        this.level.brick.forEach((bric) => {
+            if (this.character.jumpUnder(bric)) {
+                this.character.speedY = 0;
+            } 
+        });
+        this.level.brick.forEach((bric) => {
+            if (this.character.jumpOnSiteRight(bric)) {
+                this.character.x = bric.x + bric.offset.right - this.character.width + this.character.offset.right;
+                this.character.speedY = 0;
+            } 
+        });
+        this.level.brick.forEach((bric) => {
+            if (this.character.jumpOnSiteLeft(bric)) {
+                this.character.x = bric.x + bric.width - bric.offset.left -  this.character.offset.left;
+                this.character.speedY = 0;
+            } 
+        });
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();

@@ -46,21 +46,43 @@ class MovableObject extends DrawableObject {
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom                        // links oben mit rechts untenda
     }
-    
+
     jumpOn(mo) {
-        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&   // this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&                      // links oben mit rechts untenda
+        console.log(this.x + this.width - this.offset.right > mo.x + mo.offset.left);
+        console.log(this.x + this.offset.left < mo.x + mo.width - mo.offset.right);
+        console.log(this.y + this.height - this.offset.bottom > mo.y + mo.offset.top);
+        console.log(this.y + this.offset.top < mo.y + mo.offset.top);
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.y + this.offset.top < mo.y + mo.offset.top  &&
             this.speedY < 0;
     }
 
-    jumpUnder(mo){
-        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
-            // this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
+    jumpUnder(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
-            this.speedY > 0.5; 
+            this.y + this.height - this.offset.bottom > mo.y + mo.height &&
+            this.speedY > 0;
+    }
+ 
+    jumpOnSiteRight(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+            this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom &&
+            this.x + this.offset.left < mo.x + mo.offset.left - 60 &&
+            !this.otherDirection;
+    }
+
+    jumpOnSiteLeft(mo) {
+        
+        return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+            this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom &&
+            this.x + this.width - this.offset.right > mo.x + mo.width - mo.offset.right + 60 &&
+            this.otherDirection;
+            
     }
 
     charInBack() {
