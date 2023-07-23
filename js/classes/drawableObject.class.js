@@ -33,7 +33,7 @@ class DrawableObject{
         // ctx.rect(this.x, this.y, this.width, this.height);
         // ctx.stroke();
         // }
-        if (this instanceof Character || this instanceof ChickenSmall || this instanceof Chicken || this instanceof Coins || this instanceof Bottle || this instanceof ThrowableObject || this instanceof BottleBottom || this instanceof Endboss){
+        if (this instanceof Brick || this instanceof Character || this instanceof ChickenSmall || this instanceof Chicken || this instanceof Coins || this instanceof Bottle || this instanceof ThrowableObject || this instanceof BottleBottom || this instanceof Endboss){
             ctx.beginPath();
         ctx.lineWidth = '4';
         ctx.strokeStyle = 'red';

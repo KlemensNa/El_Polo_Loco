@@ -10,7 +10,7 @@ class MovableObject extends DrawableObject {
     bottles = 0;
     coins = 0;
     lastHit = 0;
-    
+
 
     downToBottom() {
         setInterval(() => {
@@ -39,32 +39,48 @@ class MovableObject extends DrawableObject {
         this.speedY = 25 + (coins * 1.8);
     }
 
-    
-    isColliding(mo) {
-            return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
-                this.y + this.height - this.offset.bottom  > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
-                this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
-                this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom                        // links oben mit rechts untenda
-            }
 
-    charInBack(){
+    isColliding(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom                        // links oben mit rechts untenda
+    }
+    
+    jumpOn(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&   // this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&                      // links oben mit rechts untenda
+            this.speedY < 0;
+    }
+
+    jumpUnder(mo){
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&                    // rechts oben mit linksOben-mo
+            // this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&                      // links unten mit linksOben-mo 
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&                                    // links oben mit linksOben-mo
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+            this.speedY > 0.5; 
+    }
+
+    charInBack() {
         this.flipBoss = 1;
     }
 
-    charInFront(){
+    charInFront() {
         this.flipBoss = 0;
     }
 
-    readyToAttack(mo){
+    readyToAttack(mo) {
         return this.x - (mo.x + mo.width) < 350
     }
 
-    attack(){        
+    attack() {
         this.range = 1;
-        
+
     }
 
-    dontAttack(){
+    dontAttack() {
         this.range = 0;
     }
 
@@ -88,7 +104,7 @@ class MovableObject extends DrawableObject {
         return timespan < 1;
     }
 
-    
+
 
     addBottles() {
         if (this.bottles < 6 && !this.hasAdded()) {
@@ -117,23 +133,23 @@ class MovableObject extends DrawableObject {
             this.lastHit = new Date().getTime();
             if (this.energy <= 0) {
                 this.energy = 0;
-                
-                setTimeout(() => {enemies.splice(index, 1)}, 600);
+
+                setTimeout(() => { enemies.splice(index, 1) }, 600);
             }
         }
     }
 
-    hurtEnemy(){
+    hurtEnemy() {
         let timespan = (new Date().getTime() - this.lastHit) / 1000;
         return timespan < 1;
     }
 
-    noKeyPushed(){
+    noKeyPushed() {
         let timespan = (new Date().getTime() - this.keyPushed) / 1000;
         return timespan > 5;
     }
 
-    
+
 
 
 

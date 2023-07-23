@@ -34,7 +34,7 @@ class World {
             this.checkThrowObjects();
             this.checkAttackRange();
             this.checkCharInBack();
-        }, 100);
+        }, 30);
     }
 
     checkThrowObjects() {
@@ -61,6 +61,27 @@ class World {
     }
 
     checkCollisions() {
+        this.level.brick.forEach((bric) => {
+            if (this.character.jumpOn(bric)) {
+                console.log(this.character.fallingBorder);
+                this.speedY = 0;       
+                this.character.loadImage('img/2_character_pepe/2_walk/W-21.png');
+                
+                // const index = this.level.brick.find(bric => this.character.jumpOn(bric));
+                this.character.fallingBorder = bric.y - this.character.height - this.character.offset.bottom + bric.offset.top;
+                console.log(this.character.fallingBorder);
+            } 
+            else {
+                this.character.fallingBorder = 640 - this.character.height;
+            }
+        });
+        // this.level.brick.forEach((bric) => {
+        //     if (this.character.jumpUnder(bric)) {
+        //         console.log("au");                
+        //         // const index = this.level.brick.find(bric => this.character.jumpUnder(bric));
+        //         this.character.fallingBorder = this.character.speedY = 0;
+        //     } 
+        // });
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -103,6 +124,7 @@ class World {
                 }
             })
         });
+
     }
 
     checkAttackRange(){
@@ -130,6 +152,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.brick);
         this.addObjectsToMap(this.salsaBottles);
         this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
