@@ -24,8 +24,8 @@ class Chicken extends MovableObject {
         this.jumpen();
         this.downToBottom();
         this.fallingBorder = 640 - this.height;
-        this.speed = 1 + Math.random() * 1;
-        this.jumptime;
+        this.speed = 2;
+        this.jumptime = Math.random() * 500;
     }
 
     animate() {
@@ -39,10 +39,8 @@ class Chicken extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-                
+                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');                
             }
-
         }, 150);
 
         
@@ -50,11 +48,10 @@ class Chicken extends MovableObject {
 
     jumpen(){
         setInterval(() => {
-            this.jumptime = 1 + Math.random() * 5;
             if(!this.isAboveGround() && !this.isDead() && !this.isHurt()){      
                 setTimeout(() => {
                     this.speedY = 25
-                }, this.jumptime);          
+                }, this.jumptime);         
                            
             }
         }, 2000);

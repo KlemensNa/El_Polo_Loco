@@ -39,7 +39,7 @@ class World {
 
     checkThrowObjects() {
         if (keyboard.THROW && this.character.bottles && !this.character.otherDirection > 0 && !this.hasThrown()) {
-            let bottle = new ThrowableObject(this.character.x + this.character.width, this.character.y + (this.character.height / 2), 25);
+            let bottle = new ThrowableObject(this.character.x + this.character.width - this.character.offset.right, this.character.y + (this.character.height / 2), 15);
             this.salsaBottles.push(bottle);
             this.character.bottles--;
             this.statusbarBottle.addBottle(this.character.bottles);
@@ -61,38 +61,19 @@ class World {
     }
 
     checkCollisions() {
-        this.level.brick.forEach((bric) => {
-            if (this.character.jumpOn(bric)) {
-                     
-                this.character.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                // const index = this.level.brick.find(bric => this.character.jumpOn(bric));
-                // console.log(index);
-                this.character.fallingBorder = bric.y - this.character.height + bric.offset.top;
-                this.speedY = 0;  
-            } 
-            else {
-                this.character.fallingBorder = 640 - this.character.height;
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.jumpOn(enemy) && this.character.speedY < 0) {
+
+                const index = this.level.enemies.findIndex(enemy => this.character.jumpOn(enemy));
+                    enemy.hitEnemy(this.level.enemies, index);
+                    this.character.speedY = 18;
+                    if (enemy instanceof Endboss){
+                        this.statusbarBoss.setPercentage(enemy.energy);
+                    }
             }
         });
-        this.level.brick.forEach((bric) => {
-            if (this.character.jumpUnder(bric)) {
-                this.character.speedY = 0;
-            } 
-        });
-        this.level.brick.forEach((bric) => {
-            if (this.character.jumpOnSiteRight(bric)) {
-                this.character.x = bric.x + bric.offset.right - this.character.width + this.character.offset.right;
-                this.character.speedY = 0;
-            } 
-        });
-        this.level.brick.forEach((bric) => {
-            if (this.character.jumpOnSiteLeft(bric)) {
-                this.character.x = bric.x + bric.width - bric.offset.left -  this.character.offset.left;
-                this.character.speedY = 0;
-            } 
-        });
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !this.character.jumpOn(enemy) && !enemy.isDead()) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
             }
@@ -133,7 +114,23 @@ class World {
                 }
             })
         });
-
+        // this.level.brick.forEach((bric) => {
+        //     if (this.character.jumpUnder(bric)) {
+        //         this.character.speedY = 0;
+        //     } 
+        // });
+        // this.level.brick.forEach((bric) => {
+        //     if (this.character.jumpOnSiteRight(bric)) {
+        //         this.character.x = bric.x + bric.offset.right - this.character.width + this.character.offset.right;
+        //         this.character.speedY = 0;
+        //     } 
+        // });
+        // this.level.brick.forEach((bric) => {
+        //     if (this.character.jumpOnSiteLeft(bric)) {
+        //         this.character.x = bric.x + bric.width - bric.offset.left -  this.character.offset.left;
+        //         this.character.speedY = 0;
+        //     } 
+        // });
     }
 
     checkAttackRange(){
@@ -148,7 +145,6 @@ class World {
         if((this.level.enemies[this.level.enemies.length - 1].x + 
         this.level.enemies[this.level.enemies.length - 1].width/2) < (this.character).x){
             this.level.enemies[this.level.enemies.length - 1].charInBack();
-            console.log("yeah")
         } else {
             this.level.enemies[this.level.enemies.length - 1].charInFront();
         };
@@ -161,7 +157,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.brick);
+        // this.addObjectsToMap(this.level.brick);
         this.addObjectsToMap(this.salsaBottles);
         this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
@@ -174,9 +170,6 @@ class World {
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);              //und nach dem zeichen des Levels und der Charaktere wieder nach links
-        // Green rectangle
-
-
         //draw wird im Takt immer wieder ausgeführt --> Takt je nach Grafikkarte
         let self = this;
         requestAnimationFrame(() => {

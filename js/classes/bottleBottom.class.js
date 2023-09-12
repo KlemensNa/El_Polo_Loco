@@ -19,7 +19,13 @@ class BottleBottom extends MovableObject{
         // this.x = 200 + (Math.random()* 2000); 
         this.y = 650 - this.height; 
         this.loadImages(this.IMAGES);
+        this.animate();
     }
     
+    animate(){
+        setInterval(() => {
+            this.playAnimation(this.IMAGES)
+        }, 700);
+    }
 }
 

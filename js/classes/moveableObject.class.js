@@ -18,6 +18,9 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
+            if (this.speedY < 0 && !this.isAboveGround()){
+                this.speedY = 0;
+            }
         }, 50)
     }
 
@@ -47,11 +50,7 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom                        // links oben mit rechts untenda
     }
 
-    jumpOn(mo) {
-        console.log(this.x + this.width - this.offset.right > mo.x + mo.offset.left);
-        console.log(this.x + this.offset.left < mo.x + mo.width - mo.offset.right);
-        console.log(this.y + this.height - this.offset.bottom > mo.y + mo.offset.top);
-        console.log(this.y + this.offset.top < mo.y + mo.offset.top);
+    jumpOn(mo) {        
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -66,7 +65,12 @@ class MovableObject extends DrawableObject {
             this.y + this.height - this.offset.bottom > mo.y + mo.height &&
             this.speedY > 0;
     }
- 
+    
+    /**
+     * functions to inteact with bricks added to the world
+     * @param {*} mo 
+     * @returns 
+     */
     jumpOnSiteRight(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
@@ -75,8 +79,7 @@ class MovableObject extends DrawableObject {
             !this.otherDirection;
     }
 
-    jumpOnSiteLeft(mo) {
-        
+    jumpOnSiteLeft(mo) {        
         return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
             this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom &&
