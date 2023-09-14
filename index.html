@@ -28,6 +28,24 @@
     <title>Document</title>
 </head>
 <body onload="init()">
-    <canvas id="canvas" width="960" height="720"></canvas>
+    <div id="mainContainer" width="720" height="480">
+        <div id="upperButtons" class="buttonRow">
+            <div id="btnPlay" class="playButton"><img src="img/10_buttons/play_button.png" alt=""></div>
+            <div id="btnPause" class="playButton"><img src="img/10_buttons/pause_button.png" alt=""></div>
+            <div id="btnMusik" class="playButton"><img src="img/10_buttons/music_button.png" alt=""></div>
+            <div id="btnMute" class="playButton"><img src="img/10_buttons/mute_button.png" alt=""></div>
+        </div>
+        <div id="downerButtons">            
+            <div id="downerButtonsLeft" class="buttonRow">
+                <div id="btnLeft" class="playButton"><img src="img/10_buttons/left_button.png" alt=""></div>
+                <div id="btnRight" class="playButton"><img src="img/10_buttons/right_button.png" alt=""></div>
+            </div>
+            <div id="downerButtonsRight" class="buttonRow">
+                <div id="btnUp" class="playButton"><img src="img/10_buttons/up_button.png" alt=""></div>
+                <div id="btnThrow">Throw</div>
+            </div>            
+        </div>        
+        <canvas id="canvas" width="720" height="480"></canvas>
+    </div>    
 </body>
 </html>

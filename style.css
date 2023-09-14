@@ -4,8 +4,89 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(img/desert3.jpg);
+    background-size: cover;
 }
 
 canvas{
     background-color: black;
+    border-style: double;
+    border-width: 25px;
+    background-color: rgb(122, 37, 22);
+    display: block; 
 }
+
+#mainContainer{
+    position: relative;
+}
+
+#downerButtons{
+    position: absolute;
+    bottom: 7%;
+    left: 7%;
+    right: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttonRow{
+    display: flex;
+    gap:24px;
+}
+
+.playButton img{
+    width: 45px;
+    height: 45px;
+}
+
+#btnThrow{
+    background-color: #B16903;
+    width: 120px;
+    height: 35px;
+    border-radius: 30px;
+    border-style: double;
+    border-color: #844406;
+    border-width: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #512400;
+    font-weight: 900;
+    font-size: 24px;
+}
+
+#upperButtons{
+    position: absolute;
+    top: 7%;    
+    right: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 770px){
+    canvas{
+        width: 100vw;
+        border: none;
+    }
+
+    #downerButtons{        
+        bottom: 3%;
+        left: 3%;
+        right: 3%;
+    }
+
+    #upperButtons{
+       top: 3%;
+       right: 3%;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas{
+        height: 100vh;
+        border: none;
+    }
+}
+

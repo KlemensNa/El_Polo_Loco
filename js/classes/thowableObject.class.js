@@ -16,10 +16,10 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ];
     offset = {
-        top: 15,
-        right: 60,
-        bottom: 25,
-        left: 30,
+        top: 12,
+        right: 30,
+        bottom: 20,
+        left: 22,
     }
 
 
@@ -28,12 +28,12 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y, speed) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-        this.width = 100;
-        this.height = 100;
+        this.width = 70;
+        this.height = 70;
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.fallingBorder = 660 - this.height;
+        this.fallingBorder = 430 - this.height;
         this.loadImages(this.IMAGES_THROW);
         this.loadImages(this.IMAGES_SPLASH);
         this.throw(this.x, this.y, this.speed);
@@ -43,7 +43,7 @@ class ThrowableObject extends MovableObject {
     throw(x, y, speed) {
         this.x = x;
         this.y = y;
-        this.speedY = 15;
+        this.speedY = 8;
         this.speedX = speed;
         this.downToBottom();
 

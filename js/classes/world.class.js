@@ -7,9 +7,9 @@ class World {
     keyboard;
     camera_x = 100;
     statusbarHealth = new Statusbar(Statusbar.IMAGES_HEALTHBAR, 10, 10);
-    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 10, 80);
-    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 10, 150);
-    statusbarBoss = new Statusbar(Statusbar.IMAGES_BOSSBAR, 700, 10)
+    statusbarCoins = new Statusbar(Statusbar.IMAGES_COINBAR, 10, 60);
+    statusbarBottle = new Statusbar(Statusbar.IMAGES_BOTTLEBAR, 10, 110);
+    statusbarBoss = new Statusbar(Statusbar.IMAGES_BOSSBAR, 530, 70)
     salsaBottles = [];
     endboss = this.level.enemies.length - 1;
     
@@ -53,7 +53,7 @@ class World {
             this.lastThrow = new Date().getTime();
             this.character.keyPushed = new Date().getTime(); 
         }
-    }
+    }    
 
     hasThrown() {
         let timespan = (new Date().getTime() - this.lastThrow) / 1000;

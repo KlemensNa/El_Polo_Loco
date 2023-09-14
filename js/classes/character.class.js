@@ -59,12 +59,12 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');      //superconstuctor nur einmal aufrufbar, danach einfach mit this.
-        this.height = 300;
-        this.width = 150;
-        this.y = 640 - this.height;
+        this.height = 230;
+        this.width = 110;
+        this.y = 430 - this.height;
         this.x = 200;
-        this.speed = 15;
-        this.fallingBorder = 640 - this.height;
+        this.speed = 9;
+        this.fallingBorder = 430 - this.height;
         this.loadImages(this.IMAGES);
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_HURT);

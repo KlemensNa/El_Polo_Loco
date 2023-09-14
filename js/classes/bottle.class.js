@@ -7,16 +7,16 @@ class Bottle extends DrawableObject{
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
     offset = {
-        top: 15,
-        right: 30,
-        bottom: 15,
-        left: 30,
+        top: 12,
+        right: 25,
+        bottom: 12,
+        left: 25,
     }
 
     constructor(x){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-        this.width = 100;
-        this.height = 100;
+        this.width = 70;
+        this.height = 70;
         this.y = 300;
         this.x = x;
         // this.x = 200 + (Math.random()* 2600); 

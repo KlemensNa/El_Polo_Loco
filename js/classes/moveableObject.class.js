@@ -39,7 +39,7 @@ class MovableObject extends DrawableObject {
     }
 
     jump(coins) {
-        this.speedY = 25 + (coins * 1.8);
+        this.speedY = 18 + (coins * 1.8);
     }
 
 

@@ -1,7 +1,7 @@
 class Endboss extends MovableObject{
     
-    height = 400;
-    width = 400;
+    height = 230;
+    width = 230;
     energy = 100;
     range;
     flipBoss;
@@ -48,22 +48,22 @@ class Endboss extends MovableObject{
     ]
     currentImg = 0;
     offset = {
-        top: 85,
-        right: 60,
-        bottom: 70,
-        left: 50,
+        top: 40,
+        right: 42,
+        bottom: 55,
+        left: 34,
     }
 
     constructor(){
         super().loadImage(this.IMAGES_ALERT[7]);    
-        this.y = 660 - this.height;
+        this.y = 430 - this.height;
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.fallingBorder = 640 - this.height;
-        this.x = 3000;
+        this.fallingBorder = 430 - this.height;
+        this.x = 3500;
         this.animate();
         this.jumpen();
         this.downToBottom(); 
@@ -78,7 +78,7 @@ class Endboss extends MovableObject{
                 this.playAnimation(this.IMAGES_DEAD);
             }
             else if(this.isHurt()){
-                this.speed = 15;
+                this.speed = 10;
                 this.playAnimation(this.IMAGES_HURT);
             }
             else if(this.flipBoss == 1){
@@ -89,7 +89,7 @@ class Endboss extends MovableObject{
             else if(!this.isDead() && !this.isHurt() && this.range == 0){
                 this.moveLeft();
                 this.otherDirection = false;
-                this.speed = 5;
+                this.speed = 3;
                 this.playAnimation(this.IMAGES_WALK);
             }
 
@@ -97,7 +97,7 @@ class Endboss extends MovableObject{
                 this.moveLeft();
                 this.otherDirection = false;
                 this.playAnimation(this.IMAGES_ATTACK);
-                this.speed = 35;          
+                this.speed = 26;          
             }            
             
         }, 150 );
