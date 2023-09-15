@@ -28,12 +28,41 @@
     <title>Document</title>
 </head>
 <body onload="init()">
+
     <div id="mainContainer" width="720" height="480">
+        <div id="startScreen">
+            <div id="startScreenStart" class="startScreenButtons">Start Game</div>
+            <div id="startScreenHowTo" class="startScreenButtons">HowToPlay</div>
+        </div>
+        <div id="settingsScreen">
+            <div id="settingsLeft" class="settingsContainer">
+                <div class="buttonOrItem"><img src="img/10_buttons/left_button.png" alt=""> Or "S" Or ArrowLeft</div>
+                <div class="explantation">Move Left</div>
+            </div>
+            <div id="settingsRight" class="settingsContainer">
+                <div class="buttonOrItem"><img src="img/10_buttons/right_button.png" alt=""> Or "D" Or ArrowRight</div>
+                <div class="explantation">Move Right</div>
+            </div>
+            <div id="settingsJump" class="settingsContainer">
+                <div class="buttonOrItem"><img src="img/10_buttons/up_button.png" alt=""> Or "W" Or ArrowLeft</div>
+                <div class="explantation">Jump</div>
+            </div>
+            <div id="settingsThrow" class="settingsContainer">
+                <div class="buttonOrItem">ThrowButton Or "E" Or Space</div>
+                <div class="explantation">Throw Bottle</div>
+            </div>
+            <div id="settingsBottles" class="settingsContainer"></div>
+            <div id="settingsCoins" class="settingsContainer"></div>
+            <div id="settingsChicken" class="settingsContainer"></div>
+            <div id="settingsSmallChicken" class="settingsContainer"></div>
+            <div id="settingsBoss" class="settingsContainer"></div>
+        </div>
         <div id="upperButtons" class="buttonRow">
             <div id="btnPlay" class="playButton"><img src="img/10_buttons/play_button.png" alt=""></div>
             <div id="btnPause" class="playButton"><img src="img/10_buttons/pause_button.png" alt=""></div>
             <div id="btnMusik" class="playButton"><img src="img/10_buttons/music_button.png" alt=""></div>
-            <div id="btnMute" class="playButton"><img src="img/10_buttons/mute_button.png" alt=""></div>
+            <div id="btnMute" class="playButton"><img src="img/10_buttons/muted_button.png" alt=""></div>
+            <div id="btnMenu" class="playButton"><img src="img/10_buttons/menu_button.png" alt=""></div>
         </div>
         <div id="downerButtons">            
             <div id="downerButtonsLeft" class="buttonRow">
