@@ -10,10 +10,11 @@ class MovableObject extends DrawableObject {
     bottles = 0;
     coins = 0;
     lastHit = 0;
+    coinSounds = new Audio('audio/cash.mp3');
 
 
     downToBottom() {
-        setInterval(() => {
+        startInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -148,7 +149,8 @@ class MovableObject extends DrawableObject {
         if (this.coins < 6 && !this.hasAdded()) {
             this.coins += 1;
             this.lastAdd = new Date().getTime();
-            console.log('Coins:', this.coins);
+            this.coinSounds.play();
+            setTimeout(() => {this.coinSounds.pause()}, 500)
         }
     }
 
@@ -171,7 +173,7 @@ class MovableObject extends DrawableObject {
 
     noKeyPushed() {
         let timespan = (new Date().getTime() - this.keyPushed) / 1000;
-        return timespan > 5;
+        return timespan > 3;
     }
 
 

@@ -73,7 +73,7 @@ class Endboss extends MovableObject{
 
     animate(){      
 
-        setInterval(() => {
+        startInterval(() => {
             if(this.isDead()){
                 this.playAnimation(this.IMAGES_DEAD);
             }
@@ -104,7 +104,7 @@ class Endboss extends MovableObject{
     }
 
     jumpen(){
-        setInterval(() => {
+        startInterval(() => {
             if(!this.isAboveGround() && this.range == 1 && !this.isDead() && !this.isHurt()){      
                 setTimeout(() => {
                     this.speedY = 30

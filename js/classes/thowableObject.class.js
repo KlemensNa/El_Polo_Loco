@@ -22,7 +22,7 @@ class ThrowableObject extends MovableObject {
         left: 22,
     }
 
-
+    bottleSound =  new Audio('audio/bottle-splash.mp3');
 
 
 
@@ -47,15 +47,17 @@ class ThrowableObject extends MovableObject {
         this.speedX = speed;
         this.downToBottom();
 
-        setInterval(() => {
+        startInterval(() => {
             this.x += this.speedX;
         }, 50);
 
-        setInterval(() => {
+        startInterval(() => {
             if (!this.isAboveGround() || this.speedX == 0) {        // kommt auf dem Boden auf
                 this.speedX = 0;
                 this.playAnimation(this.IMAGES_SPLASH);
                 this.deleteBottle();
+                this.bottleSound.play();
+                setTimeout(() => {this.bottleSound.pause()}, 500)
             }
             else {
                 this.playAnimation(this.IMAGES_THROW)

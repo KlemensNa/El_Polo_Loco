@@ -2,11 +2,15 @@ let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
+let intervalsID = [];
+let stoppedIntervalsID = [];
+mainTheme = new Audio('audio/mexican_music.mp3');
 
 function init(){
     canvas = document.getElementById('canvas');
-    // loadStartscreen();
     initLevel();
+    fadeOutStartscreen();
+    mainTheme.play();
     // gibt "canvas" als Argument mit, um in der Welt alles zu erstellen
     world = new World(canvas, keyboard);
     addTouchListener();
@@ -63,42 +67,88 @@ window.addEventListener("keyup", (event) => {
 });
 
 function addTouchListener(){
-    document.getElementById('btnLeft').addEventListener('touchstart', (e) =>{
+
+    const btnLeft = document.getElementById('btnLeft');
+    const btnRight = document.getElementById('btnRight');
+    const btnJump = document.getElementById('btnUp');
+    const btnThrow = document.getElementById('btnThrow');
+
+    btnLeft.addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.LEFT = true;
     });
     
-    document.getElementById('btnLeft').addEventListener('touchend', (e) =>{
+    btnLeft.addEventListener('touchend', (e) =>{
         e.preventDefault();
         keyboard.LEFT = false;
     });
 
-    document.getElementById('btnRight').addEventListener('touchstart', (e) =>{
+    btnLeft.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+
+    btnLeft.addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    btnRight.addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.RIGHT = true;
     });
     
-    document.getElementById('btnRight').addEventListener('touchend', (e) =>{
+    btnRight.addEventListener('touchend', (e) =>{
         e.preventDefault();
         keyboard.RIGHT = false;
     });
 
-    document.getElementById('btnUp').addEventListener('touchstart', (e) =>{
+    btnRight.addEventListener('mousedown', (e) =>{
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    
+    btnRight.addEventListener('mouseup', (e) =>{
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    btnJump.addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.UP = true;
     });
     
-    document.getElementById('btnUp').addEventListener('touchend', (e) =>{
+    btnJump.addEventListener('touchend', (e) =>{
         e.preventDefault();
         keyboard.UP = false;
     });
 
-    document.getElementById('btnThrow').addEventListener('touchstart', (e) =>{
+    btnJump.addEventListener('mousedown', (e) =>{
+        e.preventDefault();
+        keyboard.UP = true;
+    });
+    
+    btnJump.addEventListener('mouseup', (e) =>{
+        e.preventDefault();
+        keyboard.UP = false;
+    });
+
+    btnThrow.addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.THROW = true;
     });
     
-    document.getElementById('btnThrow').addEventListener('touchend', (e) =>{
+    btnThrow.addEventListener('touchend', (e) =>{
+        e.preventDefault();
+        keyboard.THROW = false;
+    });
+
+    btnThrow.addEventListener('mousedown', (e) =>{
+        e.preventDefault();
+        keyboard.THROW = true;
+    });
+    
+    btnThrow.addEventListener('mouseup', (e) =>{
         e.preventDefault();
         keyboard.THROW = false;
     });
@@ -121,8 +171,91 @@ function addTouchListener(){
     document.getElementById('btnMute').addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.MUSIC = false;
-    });
-    
-    
+    });   
 }
+
+
+function toggleDescriptions(){
+    document.getElementById('settingsScreen').classList.toggle("d-flex");
+}
+
+
+function fadeOutStartscreen(){
+    document.getElementById('startScreen').classList.add("d-none");
+}
+
+
+function startInterval(fn, time){
+    let id = setInterval(fn, time)
+    intervalsID.push(id);
+}
+
+
+function stopIntervals(){
+    intervalsID.forEach(clearInterval);
+}
+
+
+function openExit(){
+    document.getElementById('exitQuestionScreen').classList.add("d-flex");
+}
+
+
+function quitGame(){
+    stopIntervals();
+    document.getElementById('startScreen').classList.remove("d-none");
+    document.getElementById('exitQuestionScreen').classList.remove("d-flex");
+}
+
+
+function openRestart(){
+    document.getElementById('restartQuestionScreen').classList.add("d-flex");
+}
+
+
+function restartGame(){
+    returnToGame('restartQuestionScreen')
+    init();    
+}
+
+
+function returnToGame(i){
+    document.getElementById(i).classList.remove("d-flex");
+}
+
+function disableSounds(){
+    document.getElementById('btnMusik').classList.add('d-none');
+    document.getElementById('btnMute').classList.add('d-flex');
+}
+
+function enableSounds(){
+    document.getElementById('btnMusik').classList.remove('d-none');
+    document.getElementById('btnMute').classList.remove('d-flex');
+}
+
+
+
+function muteAllSounds() {
+    const audioElements = document.querySelectorAll('audio');
+  
+    audioElements.forEach((audio) => {
+      audio.muted = true;
+    });
+  }
+  
+  
+function unmuteAllSounds() {    
+    const audioElements = document.querySelectorAll('audio');
+  
+    audioElements.forEach((audio) => {
+      audio.muted = false;
+    });
+  }
+  
+
+  
+
+
+
+
 

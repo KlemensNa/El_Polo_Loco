@@ -12,7 +12,7 @@ class ChickenSmall extends MovableObject {
         bottom: 18,
         left: 11,
     };
-
+    lilChicken = new Audio('audio/küken.mp3');
 
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
@@ -27,19 +27,25 @@ class ChickenSmall extends MovableObject {
 
     animate() {
 
-        setInterval(() => {
+        startInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft();
                 this.playAnimation(this.IMAGES)
             }
         }, 40);
 
-        setInterval(() => {
+        startInterval(() => {
             if (this.isDead()) {
                 this.loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
             }
-
         }, 150);
+
+        startInterval(() => {
+            if(this.isHurt()){
+                this.lilChicken.play();
+                setTimeout(() => {this.lilChicken.pause()}, 300)
+            }
+        }, 150)
 
     }
 }

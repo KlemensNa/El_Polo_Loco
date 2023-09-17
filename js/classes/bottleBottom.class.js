@@ -23,7 +23,7 @@ class BottleBottom extends MovableObject{
     }
     
     animate(){
-        setInterval(() => {
+        startInterval(() => {
             this.playAnimation(this.IMAGES)
         }, 700);
     }

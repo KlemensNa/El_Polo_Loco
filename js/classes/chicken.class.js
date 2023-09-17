@@ -14,6 +14,7 @@ class Chicken extends MovableObject {
         bottom: 13,
         left: 6,
     }
+    chickenSound = new Audio('audio/chicken.mp3');
 
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -30,14 +31,14 @@ class Chicken extends MovableObject {
 
     animate() {
 
-        setInterval(() => {
+        startInterval(() => {
             if(!this.isDead()){
             this.moveLeft();
             this.playAnimation(this.IMAGES)
         }
         }, 40);
 
-        setInterval(() => {
+        startInterval(() => {
             if (this.isDead()) {
                 this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');                
             }
@@ -50,9 +51,9 @@ class Chicken extends MovableObject {
         setInterval(() => {
             if(!this.isAboveGround() && !this.isDead() && !this.isHurt()){      
                 setTimeout(() => {
-                    this.speedY = 25
-                }, this.jumptime);         
-                           
+                    this.speedY = 25;
+                    this.chickenSound.play();
+                }, this.jumptime);                          
             }
         }, 2000);
     }
