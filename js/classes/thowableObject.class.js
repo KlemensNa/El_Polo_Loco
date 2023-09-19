@@ -37,6 +37,7 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_THROW);
         this.loadImages(this.IMAGES_SPLASH);
         this.throw(this.x, this.y, this.speed);
+        sounds.push(this.bottleSound)   
     }
 
 
@@ -55,18 +56,21 @@ class ThrowableObject extends MovableObject {
             if (!this.isAboveGround() || this.speedX == 0) {        // kommt auf dem Boden auf
                 this.speedX = 0;
                 this.playAnimation(this.IMAGES_SPLASH);
-                this.deleteBottle();
-                this.bottleSound.play();
-                setTimeout(() => {this.bottleSound.pause()}, 500)
-            }
-            else {
-                this.playAnimation(this.IMAGES_THROW)
+                this.deleteBottle();      
+            }else {
+                this.playAnimation(this.IMAGES_THROW);
+                
             }
         }, 100)
     }
 
-    deleteBottle() {      
+    deleteBottle() {    
+        if(!sounds[0].muted){
+            this.bottleSound.play()
+        }
         setTimeout(() => {delete this.x}, 200);
+        setTimeout(() => {this.bottleSound.pause();}, 400);
+        
     }
 
 

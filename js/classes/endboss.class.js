@@ -5,6 +5,8 @@ class Endboss extends MovableObject{
     energy = 100;
     range;
     flipBoss;
+    bossSound = new Audio('audio/hahn.mp3');
+    counter = 0;
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -53,6 +55,7 @@ class Endboss extends MovableObject{
         bottom: 55,
         left: 34,
     }
+    
 
     constructor(){
         super().loadImage(this.IMAGES_ALERT[7]);    
@@ -63,12 +66,12 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.fallingBorder = 430 - this.height;
-        this.x = 3500;
+        this.x = 2000;
         this.animate();
         this.jumpen();
         this.downToBottom(); 
         this.speed = 0;
-        
+        sounds.push(this.bossSound)  
     }
 
     animate(){      
@@ -91,15 +94,20 @@ class Endboss extends MovableObject{
                 this.otherDirection = false;
                 this.speed = 3;
                 this.playAnimation(this.IMAGES_WALK);
+                this.counter = 0;
+                this.bossSound.pause()
             }
 
             else if(!this.isDead() && !this.isHurt() && this.range == 1){
                 this.moveLeft();
                 this.otherDirection = false;
                 this.playAnimation(this.IMAGES_ATTACK);
-                this.speed = 26;          
-            }            
-            
+                this.speed = 18;
+                if(this.range == 1 && this.counter < 1 && !sounds[0].muted){
+                    this.bossSound.play();
+                    this.counter++
+                }          
+            }
         }, 150 );
     }
 
@@ -108,8 +116,7 @@ class Endboss extends MovableObject{
             if(!this.isAboveGround() && this.range == 1 && !this.isDead() && !this.isHurt()){      
                 setTimeout(() => {
                     this.speedY = 30
-                }, 1000);          
-                           
+                }, 1000);                
             }
         }, 2000);
     }

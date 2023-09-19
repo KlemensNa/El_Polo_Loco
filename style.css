@@ -68,7 +68,7 @@ canvas{
     padding-bottom: 5%;
     display: none;
     gap: 30px;
-    z-index: 11;
+    z-index: 18;
     background-color: #B16903;
     flex-direction: column;
     overflow-y: scroll;
@@ -159,9 +159,17 @@ canvas{
     gap:24px;
 }
 
+.playButton{
+    cursor: pointer;
+}
+
 .playButton img{
     width: 45px;
     height: 45px;
+}
+
+.alsoInMainMenu{
+    z-index: 16;
 }
 
 #btnThrow{
@@ -178,6 +186,7 @@ canvas{
     color: #512400;
     font-weight: 900;
     font-size: 24px;
+    cursor: pointer;
 }
 
 #upperButtons{

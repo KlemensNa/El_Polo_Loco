@@ -11,14 +11,14 @@
         // new Chicken(2500),
         // new Chicken(3000), 
         // new Chicken(3500),          
-        new ChickenSmall(600),
-        new ChickenSmall(1200), 
+        // new ChickenSmall(600),
+        // new ChickenSmall(1200), 
         // new ChickenSmall(1800),
         // new ChickenSmall(2400),  
         // new ChickenSmall(3000),
         // new ChickenSmall(2800), 
         // new ChickenSmall(2600),  
-        // new Endboss(),
+        new Endboss(),
     ],
     [
         new Clouds(),
@@ -57,10 +57,10 @@
             
     ],
     [   
-        new Coins(500, 60),
-        new Coins(1000, 120),
-        new Coins(1500, 180),
-        new Coins(2000, 240),
+        new Coins(500, 300),
+        new Coins(1000, 300),
+        new Coins(1500, 300),
+        new Coins(2000, 300),
         new Coins(2500, 300),
     ],
     [

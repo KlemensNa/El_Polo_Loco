@@ -27,6 +27,7 @@ class Chicken extends MovableObject {
         this.fallingBorder = 430 - this.height;
         // this.speed = 2;
         this.jumptime = Math.random() * 500;
+        sounds.push(this.chickenSound)   
     }
 
     animate() {
@@ -48,11 +49,12 @@ class Chicken extends MovableObject {
     }
 
     jumpen(){
-        setInterval(() => {
+        startInterval(() => {
             if(!this.isAboveGround() && !this.isDead() && !this.isHurt()){      
                 setTimeout(() => {
                     this.speedY = 25;
                     this.chickenSound.play();
+                    
                 }, this.jumptime);                          
             }
         }, 2000);

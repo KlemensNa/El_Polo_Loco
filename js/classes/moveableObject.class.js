@@ -11,6 +11,7 @@ class MovableObject extends DrawableObject {
     coins = 0;
     lastHit = 0;
     coinSounds = new Audio('audio/cash.mp3');
+    
 
 
     downToBottom() {
@@ -54,17 +55,9 @@ class MovableObject extends DrawableObject {
     jumpOn(mo) {        
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.y + this.height - this.offset.bottom + 10 > mo.y + mo.offset.top &&
             this.y + this.offset.top < mo.y + mo.offset.top  &&
             this.speedY < 0;
-    }
-
-    jumpUnder(mo) {
-        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.height &&
-            this.speedY > 0;
     }
     
     /**
@@ -149,8 +142,10 @@ class MovableObject extends DrawableObject {
         if (this.coins < 6 && !this.hasAdded()) {
             this.coins += 1;
             this.lastAdd = new Date().getTime();
+            if(!sounds[0].muted){
             this.coinSounds.play();
             setTimeout(() => {this.coinSounds.pause()}, 500)
+            }
         }
     }
 

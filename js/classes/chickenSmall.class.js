@@ -23,6 +23,7 @@ class ChickenSmall extends MovableObject {
         this.y = 430 - this.height;
         // this.speed = 1 + Math.random() * 5;
         this.animate();
+        sounds.push(this.lilChicken)   
     }
 
     animate() {

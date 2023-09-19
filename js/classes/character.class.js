@@ -49,6 +49,7 @@ class Character extends MovableObject {
     
     world;                                 // Variable in der alle varaiablen vom Object World gespecihert sind (s. Klasse World)
     walking_sound = new Audio('audio/running.mp3');
+    hitSound = new Audio('audio/autsch.mp3');
     keyPushed;
     offset = {
         top: 110,
@@ -71,7 +72,9 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_SLEEP);
         this.animate();
-        this.downToBottom();                                                    //fallen zum Boden
+        this.downToBottom();
+        sounds.push(this.walking_sound)
+        sounds.push(this.hitSound)                                                 //fallen zum Boden
     }
 
     animate() {
@@ -80,7 +83,9 @@ class Character extends MovableObject {
             
             if (keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
-                this.walking_sound.play();
+                if(!sounds[0].muted && !this.isAboveGround()){
+                    this.walking_sound.play();
+                }  
                 this.keyPushed = new Date().getTime();
             }
             else if (keyboard.LEFT) {
@@ -88,7 +93,9 @@ class Character extends MovableObject {
                 if (this.x > 200) {
                     this.moveLeft();
                 }
-                this.walking_sound.play();
+                if(!sounds[0].muted && !this.isAboveGround()){
+                    this.walking_sound.play();
+                }  
                 this.keyPushed = new Date().getTime();
             } else {
                 this.walking_sound.pause();
@@ -97,6 +104,7 @@ class Character extends MovableObject {
 
             if ((keyboard.SPACE || keyboard.UP) && !this.isAboveGround()) {
                 this.jump(this.coins);
+                this.walking_sound.pause();
                 this.keyPushed = new Date().getTime();
             }
             if(this.noKeyPushed() && !this.isDead() && !this.isHurt()){
@@ -112,6 +120,11 @@ class Character extends MovableObject {
             }
             else if(this.isHurt()){
                 this.playAnimation(this.IMAGES_HURT);
+                this.hitSound.play();
+                setTimeout(() => {
+                    this.hitSound.pause();
+                    this.hitSound.currentTime = 0;
+                }, 300);
             }            
 
             else if (this.isAboveGround()) {

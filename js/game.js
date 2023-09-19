@@ -4,12 +4,33 @@ let world;
 let keyboard = new Keyboard();
 let intervalsID = [];
 let stoppedIntervalsID = [];
-mainTheme = new Audio('audio/mexican_music.mp3');
+let sounds = [];
+let mainTheme = new Audio('audio/mexican_music.mp3');
+let thememusic = new Audio('audio/theme.mp3');
+sounds.push(mainTheme);
+sounds.push(thememusic);
+
+
+function restartAudio(audioElement) {
+    audioElement.currentTime = 0; // Setze die Wiedergabezeit auf den Anfang
+    audioElement.play(); // Starte die Wiedergabe erneut
+}
+
+
+function loadStartscreenMusic(){
+    loadThememusic();
+}
+
+
+function loadThememusic(){
+    thememusic.play();
+}
 
 function init(){
     canvas = document.getElementById('canvas');
     initLevel();
     fadeOutStartscreen();
+    thememusic.pause();
     mainTheme.play();
     // gibt "canvas" als Argument mit, um in der Welt alles zu erstellen
     world = new World(canvas, keyboard);
@@ -203,6 +224,8 @@ function openExit(){
 
 function quitGame(){
     stopIntervals();
+    stopAllSounds();
+    loadThememusic();
     document.getElementById('startScreen').classList.remove("d-none");
     document.getElementById('exitQuestionScreen').classList.remove("d-flex");
 }
@@ -214,8 +237,10 @@ function openRestart(){
 
 
 function restartGame(){
-    returnToGame('restartQuestionScreen')
-    init();    
+    returnToGame('restartQuestionScreen');
+    stopAllSounds();
+    stopIntervals();
+    init();
 }
 
 
@@ -236,21 +261,41 @@ function enableSounds(){
 
 
 function muteAllSounds() {
-    const audioElements = document.querySelectorAll('audio');
-  
-    audioElements.forEach((audio) => {
+    
+    sounds.forEach((audio) => {
       audio.muted = true;
     });
   }
   
   
-function unmuteAllSounds() {    
-    const audioElements = document.querySelectorAll('audio');
-  
-    audioElements.forEach((audio) => {
+function unmuteAllSounds() {   
+
+    sounds.forEach((audio) => {
       audio.muted = false;
     });
-  }
+}
+
+
+function createSound(path){
+    let sound = new Audio(path)
+    sounds.push(sound);
+}
+
+
+function stopAllSounds(){
+    sounds.forEach((audio) => {
+        audio.pause();
+      });
+}
+
+
+thememusic.addEventListener('ended', function() {
+    restartAudio(thememusic);
+});
+
+mainTheme.addEventListener('ended', function() {
+    restartAudio(mainTheme);
+});
   
 
   

@@ -27,7 +27,7 @@
     <script src="js/game.js"></script>
     <title>El Polo Loco</title>
 </head>
-<body>
+<body onload="loadStartscreenMusic()">
 
     <div id="mainContainer" width="720" height="480">
         <div id="startScreen">
@@ -84,8 +84,8 @@
         <div id="upperButtons" class="buttonRow">
             <div id="btnPause" class="playButton" onclick="openExit()"><img src="img/10_buttons/stop_button.png" alt=""></div>
             <div id="btnRepeat" class="playButton" onclick="openRestart()"><img src="img/10_buttons/repeat_button.png" alt=""></div>
-            <div id="btnMusik" class="playButton" onclick="disableSounds()"><img src="img/10_buttons/music_button.png" alt=""></div>
-            <div id="btnMute" class="playButton" onclick="enableSounds()"><img src="img/10_buttons/muted_button.png" alt=""></div>
+            <div id="btnMusik" class="playButton alsoInMainMenu" onclick="disableSounds(), muteAllSounds()"><img src="img/10_buttons/music_button.png" alt=""></div>
+            <div id="btnMute" class="playButton alsoInMainMenu" onclick="enableSounds(), unmuteAllSounds()"><img src="img/10_buttons/muted_button.png" alt=""></div>
         </div>
         <div id="downerButtons">            
             <div id="downerButtonsLeft" class="buttonRow">

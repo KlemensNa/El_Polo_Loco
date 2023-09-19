@@ -14,6 +14,7 @@ class World {
     endboss = this.level.enemies.length - 1;
     
     
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');                         // Sammlung von Funktionen um im Canvas etwas hinzuzufügen, zu bearbeiten oder ähnliches
@@ -37,6 +38,7 @@ class World {
         }, 16);
     }
 
+
     checkThrowObjects() {
         if (keyboard.THROW && this.character.bottles && !this.character.otherDirection > 0 && !this.hasThrown()) {
             let bottle = new ThrowableObject(this.character.x + this.character.width - this.character.offset.right, this.character.y + (this.character.height / 2), 15);
@@ -53,16 +55,18 @@ class World {
             this.lastThrow = new Date().getTime();
             this.character.keyPushed = new Date().getTime(); 
         }
-    }    
+    } 
+
 
     hasThrown() {
         let timespan = (new Date().getTime() - this.lastThrow) / 1000;
         return timespan < 0.6;
     }
 
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.jumpOn(enemy) && this.character.speedY < 0) {
+            if (this.character.jumpOn(enemy) && this.character.speedY < 0 && !this.character.isColliding(enemy)) {
 
                 const index = this.level.enemies.findIndex(enemy => this.character.jumpOn(enemy));
                     enemy.hitEnemy(this.level.enemies, index);
@@ -114,24 +118,8 @@ class World {
                 }
             })
         });
-        // this.level.brick.forEach((bric) => {
-        //     if (this.character.jumpUnder(bric)) {
-        //         this.character.speedY = 0;
-        //     } 
-        // });
-        // this.level.brick.forEach((bric) => {
-        //     if (this.character.jumpOnSiteRight(bric)) {
-        //         this.character.x = bric.x + bric.offset.right - this.character.width + this.character.offset.right;
-        //         this.character.speedY = 0;
-        //     } 
-        // });
-        // this.level.brick.forEach((bric) => {
-        //     if (this.character.jumpOnSiteLeft(bric)) {
-        //         this.character.x = bric.x + bric.width - bric.offset.left -  this.character.offset.left;
-        //         this.character.speedY = 0;
-        //     } 
-        // });
     }
+
 
     checkAttackRange(){
         if(this.level.enemies[this.level.enemies.length - 1].readyToAttack(this.character)){
@@ -139,7 +127,8 @@ class World {
         }else{
             this.level.enemies[this.level.enemies.length - 1].dontAttack();
         }
-    }    
+    }  
+
 
     checkCharInBack(){
         if((this.level.enemies[this.level.enemies.length - 1].x + 
@@ -150,14 +139,13 @@ class World {
         };
     }
 
-    // hier
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);               //Kamera bewegt sich vorm neu zeichnen nach rechts
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
-        // this.addObjectsToMap(this.level.brick);
         this.addObjectsToMap(this.salsaBottles);
         this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
