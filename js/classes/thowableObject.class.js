@@ -22,7 +22,7 @@ class ThrowableObject extends MovableObject {
         left: 22,
     }
 
-    bottleSound =  new Audio('audio/bottle-splash.mp3');
+    bottleSound = new Audio('audio/bottle-splash.mp3');
 
 
 
@@ -37,7 +37,7 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_THROW);
         this.loadImages(this.IMAGES_SPLASH);
         this.throw(this.x, this.y, this.speed);
-        sounds.push(this.bottleSound)   
+        sounds.push(this.bottleSound)
     }
 
 
@@ -47,33 +47,46 @@ class ThrowableObject extends MovableObject {
         this.speedY = 8;
         this.speedX = speed;
         this.downToBottom();
+        this.setFlySpeed();
+        this.splashAndFlyAnimation();        
+    }
 
+
+    setFlySpeed(){
         startInterval(() => {
             this.x += this.speedX;
         }, 50);
+    }
 
+
+    splashAndFlyAnimation(){
         startInterval(() => {
-            if (!this.isAboveGround() || this.speedX == 0) {        // kommt auf dem Boden auf
-                this.speedX = 0;
-                this.playAnimation(this.IMAGES_SPLASH);
-                this.deleteBottle();      
-            }else {
+            if (this.canSplash()) {        // kommt auf dem Boden auf
+                this.splashAnimationAndDeleteBottle();
+            } else {
                 this.playAnimation(this.IMAGES_THROW);
-                
             }
         }, 100)
     }
 
-    deleteBottle() {    
-        if(!sounds[0].muted){
-            this.bottleSound.play()
-        }
-        setTimeout(() => {delete this.x}, 200);
-        setTimeout(() => {this.bottleSound.pause();}, 400);
-        
+
+    canSplash() {
+        return !this.isAboveGround() || this.speedX == 0
     }
 
 
+    splashAnimationAndDeleteBottle() {
+        this.speedX = 0;
+        this.playAnimation(this.IMAGES_SPLASH);
+        this.deleteBottle();
+    }
 
 
+    deleteBottle() {
+        if (!sounds[0].muted) {
+            this.bottleSound.play()
+        }
+        setTimeout(() => { delete this.x }, 200);
+        setTimeout(() => { this.bottleSound.pause(); }, 400);
+    }
 }

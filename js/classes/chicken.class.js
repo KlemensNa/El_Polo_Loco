@@ -1,11 +1,13 @@
 class Chicken extends MovableObject {
-    height = 60;
-    width = 60;
+    
     IMAGES = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
+    
+    height = 60;
+    width = 60;
     currentImg = 0;
     energy = 20;
     offset = {
@@ -25,40 +27,62 @@ class Chicken extends MovableObject {
         this.jumpen();
         this.downToBottom();
         this.fallingBorder = 430 - this.height;
-        // this.speed = 2;
+        this.speed = 2;
         this.jumptime = Math.random() * 500;
-        sounds.push(this.chickenSound)   
+        sounds.push(this.chickenSound)
     }
 
     animate() {
-
-        startInterval(() => {
-            if(!this.isDead()){
-            this.moveLeft();
-            this.playAnimation(this.IMAGES)
-        }
-        }, 40);
-
-        startInterval(() => {
-            if (this.isDead()) {
-                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');                
-            }
-        }, 150);
-
-        
+        this.moveLeft();
+        this.dieing();
+        this.chirpSound();
     }
 
-    jumpen(){
+    jumpen() {
         startInterval(() => {
-            if(!this.isAboveGround() && !this.isDead() && !this.isHurt()){      
-                setTimeout(() => {
-                    this.speedY = 25;
-                    this.chickenSound.play();
-                    
-                }, this.jumptime);                          
+            if (this.canJump()) {
+                this.jumpAndSound();
             }
         }, 2000);
     }
 
+    moveLeft() {
+        startInterval(() => {
+            if (!this.isDead()) {
+                super.moveLeft();
+                this.playAnimation(this.IMAGES)
+            }
+        }, 40);
+    }
 
+    dieing() {
+        startInterval(() => {
+            if (this.isDead()) {
+                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+            }
+        }, 150);
+    }
+
+    canJump(){
+        return !this.isAboveGround() && !this.isDead() && !this.isHurt()
+    }
+
+
+    jumpAndSound(){
+        setTimeout(() => {
+            this.speedY = 16;         
+        }, this.jumptime);
+    }
+
+
+    chirpSound() {
+        startInterval(() => {
+            if (this.isHurt()) {
+                if (!sounds[0].muted){
+                    this.chickenSound.play();
+                }                
+                setTimeout(() => { this.chickenSound.pause() }, 600)
+            }
+        }, 150)
+    }
 }

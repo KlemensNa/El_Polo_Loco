@@ -12,7 +12,6 @@ class Clouds extends MovableObject {
 
     cloudsMove() {
         this.speed = 0.2;
-
         startInterval(() =>
             this.moveLeft(),
             50);

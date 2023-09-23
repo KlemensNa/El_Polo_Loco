@@ -34,7 +34,6 @@ class Statusbar extends DrawableObject {
     ];
 
     Images = [];
-
     percentageHealth = 100;
     amountCoins = 0;
     amountBottles = 0;

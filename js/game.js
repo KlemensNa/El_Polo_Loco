@@ -9,6 +9,7 @@ let mainTheme = new Audio('audio/mexican_music.mp3');
 let thememusic = new Audio('audio/theme.mp3');
 sounds.push(mainTheme);
 sounds.push(thememusic);
+winLose = false;
 
 
 function restartAudio(audioElement) {
@@ -17,25 +18,34 @@ function restartAudio(audioElement) {
 }
 
 
-function loadStartscreenMusic(){
-    loadThememusic();
+function loadStartscreenMusic(){    
+    disableSounds();
+    document.getElementById("btnMute").addEventListener("click", function() {
+        loadThememusic();
+    });
 }
 
 
 function loadThememusic(){
-    thememusic.play();
+    if(!document.getElementById('startScreen').classList.contains("d-none")){
+        thememusic.play();
+    }    
 }
 
-function init(){
+function initGame(){
     canvas = document.getElementById('canvas');
     initLevel();
     fadeOutStartscreen();
-    thememusic.pause();
-    mainTheme.play();
+    changeMusic();
     // gibt "canvas" als Argument mit, um in der Welt alles zu erstellen
     world = new World(canvas, keyboard);
-    addTouchListener();
-    
+    addTouchListener();    
+}
+
+
+function changeMusic(){
+    thememusic.pause();
+    mainTheme.play();
 }
 
 
@@ -174,25 +184,7 @@ function addTouchListener(){
         keyboard.THROW = false;
     });
 
-    document.getElementById('btnPlay').addEventListener('touchstart', (e) =>{
-        e.preventDefault();
-        keyboard.PAUSE = true;
-    });
-
-    document.getElementById('btnPause').addEventListener('touchstart', (e) =>{
-        e.preventDefault();
-        keyboard.PAUSE = false;
-    });
-
-    document.getElementById('btnMusik').addEventListener('touchstart', (e) =>{
-        e.preventDefault();
-        keyboard.MUSIC = true;
-    });
-
-    document.getElementById('btnMute').addEventListener('touchstart', (e) =>{
-        e.preventDefault();
-        keyboard.MUSIC = false;
-    });   
+    
 }
 
 
@@ -222,12 +214,36 @@ function openExit(){
 }
 
 
+function openWinScreen(){
+    if(winLose){
+        document.getElementById('winScreen').classList.add("d-flex");
+        stopIntervals();
+        }
+    winLose = false;
+}
+
+
+function openLoseScreen(){
+    if(winLose){
+        document.getElementById('loseScreen').classList.add("d-flex");
+        stopIntervals();
+        }
+    winLose = false;  
+}
+
+
 function quitGame(){
     stopIntervals();
-    stopAllSounds();
+    stopAllSounds();    
+    closeAndOpenScreens();
     loadThememusic();
+}
+
+function closeAndOpenScreens(){
     document.getElementById('startScreen').classList.remove("d-none");
-    document.getElementById('exitQuestionScreen').classList.remove("d-flex");
+    document.getElementById('exitQuestionScreen').classList.remove("d-flex"); 
+    document.getElementById('winScreen').classList.remove("d-flex");
+    document.getElementById('loseScreen').classList.remove("d-flex"); 
 }
 
 
@@ -240,7 +256,13 @@ function restartGame(){
     returnToGame('restartQuestionScreen');
     stopAllSounds();
     stopIntervals();
-    init();
+    initGame();
+}
+
+
+function newGame(){
+    quitGame();
+    initGame();
 }
 
 
@@ -249,30 +271,26 @@ function returnToGame(i){
 }
 
 function disableSounds(){
-    document.getElementById('btnMusik').classList.add('d-none');
-    document.getElementById('btnMute').classList.add('d-flex');
+    document.getElementById('btnMusik').classList.remove('d-flex');
+    document.getElementById('btnMute').classList.remove('d-none');
+    muteAllSounds();
 }
 
 function enableSounds(){
-    document.getElementById('btnMusik').classList.remove('d-none');
-    document.getElementById('btnMute').classList.remove('d-flex');
+    document.getElementById('btnMusik').classList.add('d-flex');
+    document.getElementById('btnMute').classList.add('d-none');
+    unmuteAllSounds();
 }
 
 
 
-function muteAllSounds() {
-    
-    sounds.forEach((audio) => {
-      audio.muted = true;
-    });
+function muteAllSounds() {    
+    sounds.forEach((audio) => audio.muted = true)
   }
   
   
 function unmuteAllSounds() {   
-
-    sounds.forEach((audio) => {
-      audio.muted = false;
-    });
+    sounds.forEach((audio) => audio.muted = false)
 }
 
 
@@ -283,24 +301,40 @@ function createSound(path){
 
 
 function stopAllSounds(){
-    sounds.forEach((audio) => {
-        audio.pause();
-      });
+    sounds.forEach((audio) => audio.pause())
 }
 
-
+/**
+ * Eventlistener to create music loops 
+ */
 thememusic.addEventListener('ended', function() {
     restartAudio(thememusic);
 });
 
+
 mainTheme.addEventListener('ended', function() {
     restartAudio(mainTheme);
 });
-  
-
-  
 
 
 
 
 
+/**
+ * Eventlistener for Mobilescreen 
+ */
+
+window.addEventListener('resize', checkScreenSize);
+window.addEventListener('load', checkScreenSize);
+
+function checkScreenSize() {
+    if (mobileMode()) {
+        document.getElementById('rotateScreen').classList.add("d-flex")
+    }else{
+        document.getElementById('rotateScreen').classList.remove("d-flex")
+    }
+}
+
+function mobileMode(){
+     return window.innerWidth < 700 && window.innerHeight > window.innerWidth
+}

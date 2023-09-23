@@ -1,20 +1,12 @@
-class Endboss extends MovableObject{
-    
-    height = 230;
-    width = 230;
-    energy = 100;
-    range;
-    flipBoss;
-    bossSound = new Audio('audio/hahn.mp3');
-    counter = 0;
+class Endboss extends MovableObject {
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
-        'img/4_enemie_boss_chicken/2_alert/G6.png',        
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
         'img/4_enemie_boss_chicken/2_alert/G7.png',
         'img/4_enemie_boss_chicken/2_alert/G8.png',
         'img/4_enemie_boss_chicken/2_alert/G9.png',
-        'img/4_enemie_boss_chicken/2_alert/G10.png',        
+        'img/4_enemie_boss_chicken/2_alert/G10.png',
         'img/4_enemie_boss_chicken/2_alert/G11.png',
         'img/4_enemie_boss_chicken/2_alert/G12.png',
     ];
@@ -54,11 +46,20 @@ class Endboss extends MovableObject{
         right: 42,
         bottom: 55,
         left: 34,
-    }
-    
+    };
 
-    constructor(){
-        super().loadImage(this.IMAGES_ALERT[7]);    
+    height = 230;
+    width = 230;
+    energy = 100;
+    range;
+    flipBoss;
+    bossSound = new Audio('audio/hahn.mp3');
+    winSound = new Audio('audio/WinSound.mp3')
+    counter = 0;
+
+
+    constructor() {
+        super().loadImage(this.IMAGES_ALERT[7]);
         this.y = 430 - this.height;
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_ALERT);
@@ -66,60 +67,110 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.fallingBorder = 430 - this.height;
-        this.x = 2000;
+        this.x = 3500;
         this.animate();
         this.jumpen();
-        this.downToBottom(); 
+        this.downToBottom();
         this.speed = 0;
-        sounds.push(this.bossSound)  
+        sounds.push(this.bossSound)
+        sounds.push(this.winSound)
     }
 
-    animate(){      
-
-        startInterval(() => {
-            if(this.isDead()){
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-            else if(this.isHurt()){
-                this.speed = 10;
-                this.playAnimation(this.IMAGES_HURT);
-            }
-            else if(this.flipBoss == 1){
-                this.moveRight();
-                this.playAnimation(this.IMAGES_WALK);
-                this.otherDirection = true;
-            }
-            else if(!this.isDead() && !this.isHurt() && this.range == 0){
-                this.moveLeft();
-                this.otherDirection = false;
-                this.speed = 3;
-                this.playAnimation(this.IMAGES_WALK);
-                this.counter = 0;
-                this.bossSound.pause()
-            }
-
-            else if(!this.isDead() && !this.isHurt() && this.range == 1){
-                this.moveLeft();
-                this.otherDirection = false;
-                this.playAnimation(this.IMAGES_ATTACK);
-                this.speed = 18;
-                if(this.range == 1 && this.counter < 1 && !sounds[0].muted){
-                    this.bossSound.play();
-                    this.counter++
-                }          
-            }
-        }, 150 );
+    animate() {
+        this.animationsAndSounds();
     }
 
-    jumpen(){
+    jumpen() {
         startInterval(() => {
-            if(!this.isAboveGround() && this.range == 1 && !this.isDead() && !this.isHurt()){      
-                setTimeout(() => {
-                    this.speedY = 30
-                }, 1000);                
-            }
+            if (this.canJump())
+                this.jump();
         }, 2000);
     }
 
-   
+    animationsAndSounds() {
+        startInterval(() => {
+            if (this.isDead())
+                this.deadAnimationAndSound();
+            else if (this.isHurt())
+                this.hurtAnimation();
+            else if (this.canChangeDirection())
+                this.changeDirection();
+            else if (this.canWalkLeftNormal())
+                this.moveLeft();
+            else if (this.canAttack())
+                this.attackMode();
+        }, 150);
+    }
+
+    deadAnimationAndSound() {
+        this.playAnimation(this.IMAGES_DEAD);
+        winLose = true;
+        mainTheme.pause();
+        if (!sounds[0].muted) {
+            this.winSound.play();
+        }
+        this.animate(clearInterval);
+        this.openWinningScreen()
+    }
+
+    hurtAnimation() {
+        this.speed = 10;
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
+    canChangeDirection() {
+        return this.flipBoss == 1
+    }
+
+    changeDirection() {
+        this.moveRight();
+        this.playAnimation(this.IMAGES_WALK);
+        this.otherDirection = true;
+    }
+
+    canWalkLeftNormal() {
+        return !this.isDead() && !this.isHurt() && this.range == 0
+    }
+
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = false;
+        this.speed = 2;
+        this.playAnimation(this.IMAGES_WALK);
+        this.counter = 0;
+        this.bossSound.pause()
+    }
+
+    canAttack() {
+        return !this.isDead() && !this.isHurt() && this.range == 1
+    }
+
+    attackMode() {
+        this.moveLeft();
+        this.otherDirection = false;
+        this.playAnimation(this.IMAGES_ATTACK);
+        this.speed = 18;
+        if (this.canSoundPlayed()) {
+            this.bossSound.play();
+            this.counter++
+        }
+    }
+
+    canSoundPlayed() {
+        return this.range == 1 && this.counter < 1 && !sounds[0].muted
+    }
+
+    canJump() {
+        return !this.isAboveGround() && this.range == 1 && !this.isDead() && !this.isHurt()
+    }
+
+    jump() {
+        setTimeout(() => this.speedY = 30, 1000);
+    }
+
+    openWinningScreen() {
+        setTimeout(() => {
+            openWinScreen();
+        }, 4000)
+    }
 }

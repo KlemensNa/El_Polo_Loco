@@ -6,12 +6,14 @@ class Bottle extends DrawableObject{
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
+    
     offset = {
         top: 12,
         right: 25,
         bottom: 12,
         left: 25,
     }
+
 
     constructor(x){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
@@ -26,8 +28,6 @@ class Bottle extends DrawableObject{
     }
 
     animate(){
-        startInterval(() => {
-            this.playAnimation(this.IMAGES)
-        }, 300);
+        startInterval(() => this.playAnimation(this.IMAGES), 300);
     }
 }

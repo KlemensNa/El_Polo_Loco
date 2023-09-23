@@ -10,7 +10,6 @@ class Brick extends DrawableObject{
         left: 24,
     }
 
-
     constructor(x, y){
         super(); 
         this.loadImage('img/brick.png');
@@ -18,6 +17,5 @@ class Brick extends DrawableObject{
         this.y = y;
         this.height = 100;
         this.width = 100;
-
     }
 }

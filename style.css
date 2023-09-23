@@ -1,3 +1,8 @@
+@font-face { 
+    font-family: "western"; 
+    src: url("/fonts/ZABARS/Zabars.ttf"); 
+    }
+
 body{
     margin: 0;
     height: 100vh;
@@ -6,6 +11,8 @@ body{
     align-items: center;
     background-image: url(img/desert3.jpg);
     background-size: cover;
+    font-family: "western";
+    font-weight: 400;
 }
 
 ::-webkit-scrollbar {
@@ -60,10 +67,11 @@ canvas{
 
 #settingsScreen{
     position: absolute;
-    top:5%;
-    left: 5%;
-    right: 5%;
-    bottom: 5%;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 8px solid #512400;
     padding-top: 5%;
     padding-bottom: 5%;
     display: none;
@@ -72,6 +80,7 @@ canvas{
     background-color: #B16903;
     flex-direction: column;
     overflow-y: scroll;
+    font-size: 24px;
 }
 
 .settingsContainer{
@@ -88,6 +97,11 @@ canvas{
     align-items: center;
     gap: 8px;
     min-width: 250px;
+}
+
+#bossPic img{
+    width: 100px;
+    height: 100px;
 }
 
 .buttonOrItem img{
@@ -203,11 +217,11 @@ canvas{
 }
 
 #btnMusik{
-    display: block;
+    display: none;
 }
 
 #btnMute{
-    display: none;
+    display: flex;
 }
 
 .questionScreen{
@@ -275,6 +289,88 @@ canvas{
     cursor: pointer;
 }
 
+#winScreen{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 8px solid #512400;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: none;
+    gap: 30px;
+    z-index: 20;
+    background-color: #B16903;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+
+#loseScreen{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 8px solid #512400;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: none;
+    gap: 30px;
+    z-index: 20;
+    background-color: #B16903;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.endgameQuestion{
+    display: flex;
+    width: 80%;
+    height: 25%;
+    justify-content: space-around;
+}
+
+.endTitle{
+    font-size: 72px;
+    font-weight: 700;
+}
+
+.endanswersBtn{
+    cursor: pointer;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 8px double #512400;
+    border-radius: 18px;
+    font-size: 28px;
+}
+
+.endanswersBtn:hover{
+    background-color: #512400;
+    color: #B16903;
+    border-color: #B16903;
+}
+
+#rotateScreen{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.788);
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 42px; 
+}
 
 .d-flex{
     display: flex !important;
@@ -283,11 +379,6 @@ canvas{
 .d-none{
     display: none !important;
 }
-
-
-
-
-
 
 @media only screen and (max-width: 770px){
     canvas{

@@ -31,7 +31,7 @@
 
     <div id="mainContainer" width="720" height="480">
         <div id="startScreen">
-            <div id="startScreenStart" class="startScreenButtons" onclick="init()">Start Game</div>
+            <div id="startScreenStart" class="startScreenButtons" onclick="initGame()">Start Game</div>
             <div id="startScreenHowTo" class="startScreenButtons" onclick="toggleDescriptions()">HowToPlay</div>
         </div>
         <div id="settingsScreen">
@@ -61,7 +61,7 @@
             </div>
             <div id="settingsBottles" class="settingsContainer">
                 <div class="buttonOrItem"><img src="img/6_salsa_bottle/salsa_bottle.png" alt=""></div>
-                <div class="explantation">Collect Bottles to throw them to hit your Enemies</div>
+                <div class="explantation">Collect Bottles to throw them and hit your Enemies</div>
             </div>
             <div id="settingsCoins" class="settingsContainer">
                 <div class="buttonOrItem"><img src="img/8_coin/coin_1.png" alt=""></div>
@@ -76,7 +76,7 @@
                 <div class="explantation">Enemies that can't jump but with more speed</div>
             </div>
             <div id="settingsBoss" class="settingsContainer">
-                <div class="buttonOrItem"><img src="img/4_enemie_boss_chicken/1_walk/G1.png" alt=""></div>
+                <div class="buttonOrItem" id="bossPic"><img src="img/4_enemie_boss_chicken/1_walk/G1.png" alt=""></div>
                 <div class="explantation">surprise surprise</div>
             </div>
             <div id="getBackToStartscreen" onclick="toggleDescriptions()">BACK</div>
@@ -84,8 +84,8 @@
         <div id="upperButtons" class="buttonRow">
             <div id="btnPause" class="playButton" onclick="openExit()"><img src="img/10_buttons/stop_button.png" alt=""></div>
             <div id="btnRepeat" class="playButton" onclick="openRestart()"><img src="img/10_buttons/repeat_button.png" alt=""></div>
-            <div id="btnMusik" class="playButton alsoInMainMenu" onclick="disableSounds(), muteAllSounds()"><img src="img/10_buttons/music_button.png" alt=""></div>
-            <div id="btnMute" class="playButton alsoInMainMenu" onclick="enableSounds(), unmuteAllSounds()"><img src="img/10_buttons/muted_button.png" alt=""></div>
+            <div id="btnMusik" class="playButton alsoInMainMenu" onclick="disableSounds()"><img src="img/10_buttons/music_button.png" alt=""></div>
+            <div id="btnMute" class="playButton alsoInMainMenu" onclick="enableSounds()"><img src="img/10_buttons/muted_button.png" alt=""></div>
         </div>
         <div id="downerButtons">            
             <div id="downerButtonsLeft" class="buttonRow">
@@ -110,7 +110,26 @@
                 <div onclick="restartGame()" class="answerBtn">Yes</div>
                 <div onclick="returnToGame('restartQuestionScreen')" class="answerBtn">No</div>
             </div>
-        </div>   
+        </div>
+        <div id="rotateScreen">
+            Please rotate Your Screen
+        </div>
+        <div id="winScreen">
+            <div class="endTitle">Congratulations!!!</div>
+            <span>You wanna play again?</span>
+            <div class="endgameQuestion">
+                <div onclick="quitGame()" class="answerBtn endanswersBtn">Back to Menu</div>
+                <div onclick="newGame()" class="answerBtn endanswersBtn">Play again</div>
+            </div>            
+        </div>
+        <div id="loseScreen">
+            <div class="endTitle">You Lose!!!</div>
+            <span>You wanna play again?</span>
+            <div class="endgameQuestion">
+                <div onclick="quitGame()" class="endanswersBtn">Back to Menu</div>
+                <div onclick="newGame()" class="endanswersBtn">Try again</div>
+            </div>  
+        </div>
         <canvas id="canvas" width="720" height="480"></canvas>
     </div>    
 </body>
