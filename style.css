@@ -90,7 +90,7 @@ canvas{
     display: flex;
     justify-content: left;
     align-items: center;
-    gap: 32px;
+    gap: 100px;
 }
 
 .buttonOrItem{
@@ -165,7 +165,7 @@ canvas{
     bottom: 7%;
     left: 7%;
     right: 7%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
 }
@@ -426,7 +426,10 @@ canvas{
         width: 100%; /* 100% der Bildschirmbreite */
         height: 100%; /* 100% der Bildschirmhöhe */
         border: none;
+    }
 
+    #downerButtons{
+        display: flex !important;
     }
 }
 

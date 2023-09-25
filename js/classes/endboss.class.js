@@ -85,7 +85,7 @@ class Endboss extends MovableObject {
      */
     jumpen() {
         startInterval(() => {
-            if (this.canJump())
+            if (this.canJump() && !winLose)
                 this.jump();
         }, 2000);
     }
@@ -97,13 +97,13 @@ class Endboss extends MovableObject {
         startInterval(() => {
             if (this.isDead())
                 this.deadAnimationAndSound();
-            else if (this.isHurt())
+            else if (this.isHurt() && !winLose)
                 this.hurtAnimation();
             else if (this.canChangeDirection())
                 this.changeDirection();
-            else if (this.canWalkLeftNormal())
+            else if (this.canWalkLeftNormal() && !winLose)
                 this.moveLeft();
-            else if (this.canAttack())
+            else if (this.canAttack() && !winLose)
                 this.attackMode();
         }, 150);
     }

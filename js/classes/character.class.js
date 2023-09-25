@@ -1,5 +1,18 @@
 class Character extends MovableObject {
 
+    IMAGE_STAND = [
+        'img/2_character_pepe/1_idle/idle/I-1.png',
+        'img/2_character_pepe/1_idle/idle/I-2.png',
+        'img/2_character_pepe/1_idle/idle/I-3.png',
+        'img/2_character_pepe/1_idle/idle/I-4.png',
+        'img/2_character_pepe/1_idle/idle/I-5.png',
+        'img/2_character_pepe/1_idle/idle/I-6.png',
+        'img/2_character_pepe/1_idle/idle/I-7.png',
+        'img/2_character_pepe/1_idle/idle/I-8.png',
+        'img/2_character_pepe/1_idle/idle/I-9.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png'
+
+    ];
     IMAGES = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -53,6 +66,7 @@ class Character extends MovableObject {
     bossSound = new Audio('audio/hahn.mp3');
     loseSound = new Audio('audio/loseSound.mp3');
     hurted = false;
+    moveInterval;
     keyPushed;
     offset = {
         top: 110,
@@ -69,6 +83,7 @@ class Character extends MovableObject {
         this.x = 200;
         this.speed = 9;
         this.fallingBorder = 430 - this.height;
+        this.loadImages(this.IMAGE_STAND);
         this.loadImages(this.IMAGES);
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_HURT);
@@ -97,18 +112,19 @@ class Character extends MovableObject {
      */
     moveActions() {
         startInterval(() => {
-            if (this.canMoveRight())
-                this.moveRight();
-            else if (keyboard.LEFT)
-                this.moveLeft();
-            else
-                this.stand()
-            if (this.canJump())
-                this.jump()
-            if (this.canSleep()) {
-                this.playAnimation(this.IMAGES_SLEEP)
+            if (!winLose) {
+                if (this.canMoveRight())
+                    this.moveRight();
+                else if (keyboard.LEFT)
+                    this.moveLeft();
+                else
+                    this.stand()
+                if (this.canJump())
+                    this.jump()
+                if (this.canSleep()) 
+                    this.playAnimation(this.IMAGES_SLEEP)
+                this.world.camera_x = -this.x + 200;
             }
-            this.world.camera_x = -this.x + 200;
         }, 50);
     }
 
@@ -150,11 +166,13 @@ class Character extends MovableObject {
      * if char on ground and don't move, load Image[0]
      */
     stand() {
-        this.walking_sound.pause();
-        this.walking_sound.currentTime = 0;
-        if(!this.isAboveGround()){
-            this.loadImage(this.IMAGES[0]);
-        }        
+        if (!this.isHurt()) {
+            this.walking_sound.pause();
+            this.walking_sound.currentTime = 0;
+            if (!this.isAboveGround()) {
+                this.playAnimation(this.IMAGE_STAND);
+            }
+        }
     }
 
     /**
@@ -188,15 +206,15 @@ class Character extends MovableObject {
      * 
      */
 
-    AnimationsAndSounds(){
+    AnimationsAndSounds() {
         startInterval(() => {
-            if (this.isDead()) 
+            if (this.isDead())
                 this.deadActions();
-            else if (this.isHurt()) 
+            else if (this.isHurt())
                 this.hurtAnimations();
-            else if (this.isAboveGround()) 
+            else if (this.isAboveGround())
                 this.playAnimation(this.IMAGES_JUMP)
-            else if (keyboard.RIGHT || keyboard.LEFT) 
+            else if (keyboard.RIGHT || keyboard.LEFT)
                 this.playAnimation(this.IMAGES);
         }, 150);
     }
@@ -206,12 +224,13 @@ class Character extends MovableObject {
      */
     deadActions() {
         this.playAnimation(this.IMAGES_DEAD);
-        if (!sounds[0].muted){
+        if (!sounds[0].muted) {
             this.playDeadSounds();
-        };        
-        winLose = true;        
+        };
+        winLose = true;
         this.openLosingScreen();
     }
+
 
     /**
      * plays losing sound, stops it and plays winning sream of the boss
@@ -246,7 +265,7 @@ class Character extends MovableObject {
     /**
      * play hurt sounds, set hurtBoolean true and 900ms later back to false
      */
-    hurtSounds(){
+    hurtSounds() {
         if (!sounds[0].muted && !this.hurted) {
             this.hitSound.play();
             this.hurted = true;

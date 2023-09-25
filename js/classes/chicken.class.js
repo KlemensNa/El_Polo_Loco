@@ -5,6 +5,8 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
+
+    IMAGES_DEAD = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png']
     
     height = 60;
     width = 60;
@@ -24,6 +26,7 @@ class Chicken extends MovableObject {
         this.y = 430 - this.height;
         this.x = x;
         this.loadImages(this.IMAGES);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.jumpen();
         this.downToBottom();
@@ -48,7 +51,7 @@ class Chicken extends MovableObject {
      */
     jumpen() {
         startInterval(() => {
-            if (this.canJump()) {
+            if (this.canJump() && !winLose) {
                 this.jumpAndSound();
             }
         }, 2000);
@@ -59,7 +62,7 @@ class Chicken extends MovableObject {
      */
     moveLeft() {
         startInterval(() => {
-            if (!this.isDead()) {
+            if (!this.isDead() && !winLose) {
                 super.moveLeft();
                 this.playAnimation(this.IMAGES)
             }
@@ -71,9 +74,8 @@ class Chicken extends MovableObject {
      */
     dieing() {
         startInterval(() => {
-            if (this.isDead()) {
-                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-            }
+            if (this.isDead()) 
+                this.playAnimation(this.IMAGES_DEAD);
         }, 150);
     }
 
@@ -82,7 +84,7 @@ class Chicken extends MovableObject {
      * @returns chicken is not already in the air, is alive and not injured
      */
     canJump(){
-        return !this.isAboveGround() && !this.isDead() && !this.isHurt()
+        return !this.isAboveGround() && !this.isDead() && !this.isHurt() && !winLose
     }
 
     /**

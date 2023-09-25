@@ -282,6 +282,6 @@ class MovableObject extends DrawableObject {
      */
     noKeyPushed() {
         let timespan = (new Date().getTime() - this.keyPushed) / 1000;
-        return timespan > 1.5;
+        return timespan > 2;
     }
 }

@@ -5,6 +5,10 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
+
+    IMAGES_DEAD = [
+        'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
+    ]
     
     energy = 20;
     offset = {
@@ -19,6 +23,7 @@ class ChickenSmall extends MovableObject {
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES);
+        this.loadImages(this.IMAGES_DEAD);
         this.height = 60;
         this.width = 60;
         this.x = x;
@@ -42,7 +47,7 @@ class ChickenSmall extends MovableObject {
      */
     moveLeft() {
         startInterval(() => {
-            if (!this.isDead()) {
+            if (!this.isDead() && !winLose) {
                 super.moveLeft();
                 this.playAnimation(this.IMAGES)
             }
@@ -55,7 +60,7 @@ class ChickenSmall extends MovableObject {
     dieing() {
         startInterval(() => {
             if (this.isDead()) 
-                this.loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
+                this.playAnimation(this.IMAGES_DEAD)
         }, 150);
     }
 
