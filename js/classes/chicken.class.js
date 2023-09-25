@@ -17,6 +17,7 @@ class Chicken extends MovableObject {
         left: 6,
     }
     chickenSound = new Audio('audio/chicken.mp3');
+    chirped = false;
 
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -32,12 +33,19 @@ class Chicken extends MovableObject {
         sounds.push(this.chickenSound)
     }
 
+    /**
+     * starts several move and sound intervals
+     */
     animate() {
         this.moveLeft();
         this.dieing();
         this.chirpSound();
     }
 
+
+    /**
+     * starts interval to jump every two seconds
+     */
     jumpen() {
         startInterval(() => {
             if (this.canJump()) {
@@ -46,6 +54,9 @@ class Chicken extends MovableObject {
         }, 2000);
     }
 
+    /**
+     * move interval to move left and animate the moves
+     */
     moveLeft() {
         startInterval(() => {
             if (!this.isDead()) {
@@ -55,6 +66,9 @@ class Chicken extends MovableObject {
         }, 40);
     }
 
+    /**
+     * starts animation if chicken is dead
+     */
     dieing() {
         startInterval(() => {
             if (this.isDead()) {
@@ -63,25 +77,33 @@ class Chicken extends MovableObject {
         }, 150);
     }
 
+    /**
+     * 
+     * @returns chicken is not already in the air, is alive and not injured
+     */
     canJump(){
         return !this.isAboveGround() && !this.isDead() && !this.isHurt()
     }
 
-
+    /**
+     * starts jump movement in a ramdom generated time
+     */
     jumpAndSound(){
         setTimeout(() => {
             this.speedY = 16;         
         }, this.jumptime);
     }
 
-
+    /**
+     * starts chirpsound and set chirpBoolean to true
+     */
     chirpSound() {
         startInterval(() => {
             if (this.isHurt()) {
-                if (!sounds[0].muted){
+                if (!sounds[0].muted && !this.chirped){
                     this.chickenSound.play();
+                    this.chirped = true
                 }                
-                setTimeout(() => { this.chickenSound.pause() }, 600)
             }
         }, 150)
     }

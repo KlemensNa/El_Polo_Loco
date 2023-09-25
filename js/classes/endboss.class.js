@@ -80,6 +80,9 @@ class Endboss extends MovableObject {
         this.animationsAndSounds();
     }
 
+    /**
+     * starts interval to jump every two seconds
+     */
     jumpen() {
         startInterval(() => {
             if (this.canJump())
@@ -87,6 +90,9 @@ class Endboss extends MovableObject {
         }, 2000);
     }
 
+    /**
+     * starts several move and sound intervals
+     */
     animationsAndSounds() {
         startInterval(() => {
             if (this.isDead())
@@ -102,6 +108,9 @@ class Endboss extends MovableObject {
         }, 150);
     }
 
+    /**
+     * starts animation and sounds if boss is dead; opens winningFunction
+     */
     deadAnimationAndSound() {
         this.playAnimation(this.IMAGES_DEAD);
         winLose = true;
@@ -109,29 +118,46 @@ class Endboss extends MovableObject {
         if (!sounds[0].muted) {
             this.winSound.play();
         }
-        this.animate(clearInterval);
         this.openWinningScreen()
     }
 
+    /**
+     * starts animation if boss is injured and sets speed to 10
+     */     
     hurtAnimation() {
         this.speed = 10;
         this.playAnimation(this.IMAGES_HURT);
     }
 
+    /**
+     * 
+     * @returns variable if character is behind the boss
+     */
     canChangeDirection() {
         return this.flipBoss == 1
     }
 
+
+    /**
+     * walk to the right, play walking animations, set Boolean to true
+     */
     changeDirection() {
         this.moveRight();
         this.playAnimation(this.IMAGES_WALK);
         this.otherDirection = true;
     }
 
+    /**
+     * 
+     * @returns boss is not dead or injured and definet range to character is great
+     */
     canWalkLeftNormal() {
         return !this.isDead() && !this.isHurt() && this.range == 0
     }
 
+    /**
+     * move left, set speed, starts animations, set back crow counter and stops boss sound
+     */
     moveLeft() {
         super.moveLeft();
         this.otherDirection = false;
@@ -141,12 +167,19 @@ class Endboss extends MovableObject {
         this.bossSound.pause()
     }
 
+    /**
+     * 
+     * @returns boss is not dead or injured and definet range to character is small
+     */
     canAttack() {
         return !this.isDead() && !this.isHurt() && this.range == 1
     }
 
+    /**
+     * move left, set speed, starts animations, crow counter plus one and starts boss sound
+     */
     attackMode() {
-        this.moveLeft();
+        super.moveLeft();
         this.otherDirection = false;
         this.playAnimation(this.IMAGES_ATTACK);
         this.speed = 18;
@@ -156,18 +189,32 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * @returns is range small, counter 0 and sounds not muted
+     */
     canSoundPlayed() {
         return this.range == 1 && this.counter < 1 && !sounds[0].muted
     }
 
+    /**
+     * 
+     * @returns isalready in the air, range is small and is not dead or injured
+     */
     canJump() {
         return !this.isAboveGround() && this.range == 1 && !this.isDead() && !this.isHurt()
     }
 
+    /**
+     * starts jump movement
+     */
     jump() {
-        setTimeout(() => this.speedY = 30, 1000);
+        setTimeout(() => this.speedY = 25, 1000);
     }
 
+    /**
+     * opens Endscreen 4seconds after beating the boss
+     */
     openWinningScreen() {
         setTimeout(() => {
             openWinScreen();

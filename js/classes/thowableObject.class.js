@@ -23,6 +23,7 @@ class ThrowableObject extends MovableObject {
     }
 
     bottleSound = new Audio('audio/bottle-splash.mp3');
+    splashed = false;
 
 
 
@@ -40,7 +41,12 @@ class ThrowableObject extends MovableObject {
         sounds.push(this.bottleSound)
     }
 
-
+    /**
+     * starts several intervals when thrwoing a bottle
+     * @param {*} x x-position of the character
+     * @param {*} y y-position of the character
+     * @param {*} speed 
+     */
     throw(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -48,45 +54,55 @@ class ThrowableObject extends MovableObject {
         this.speedX = speed;
         this.downToBottom();
         this.setFlySpeed();
-        this.splashAndFlyAnimation();        
+        this.splashAndFlyAnimation();
     }
 
-
-    setFlySpeed(){
+    /**
+     * progress of the bottle in horizontal line (speed)
+     */
+    setFlySpeed() {
         startInterval(() => {
             this.x += this.speedX;
         }, 50);
     }
 
-
-    splashAndFlyAnimation(){
+    /**
+     * animation of the bottle, depending if its still flying or on the ground or hits an enemy
+     */
+    splashAndFlyAnimation() {
         startInterval(() => {
-            if (this.canSplash()) {        // kommt auf dem Boden auf
+            if (this.canSplash())        // kommt auf dem Boden auf
                 this.splashAnimationAndDeleteBottle();
-            } else {
+            else
                 this.playAnimation(this.IMAGES_THROW);
-            }
         }, 100)
     }
 
-
+    /**
+     * 
+     * @returns true when bottle hits ground or enemy
+     */
     canSplash() {
         return !this.isAboveGround() || this.speedX == 0
     }
 
-
+    /**
+     * starts animation of the splash and deletes bottle
+     */
     splashAnimationAndDeleteBottle() {
         this.speedX = 0;
         this.playAnimation(this.IMAGES_SPLASH);
         this.deleteBottle();
     }
 
-
+    /**
+     * play splash sound, delete bottle after 200ms
+     */
     deleteBottle() {
-        if (!sounds[0].muted) {
-            this.bottleSound.play()
+        if (!sounds[0].muted && !this.splashed) {
+            this.bottleSound.play();
+            this.splashed = true;
         }
-        setTimeout(() => { delete this.x }, 200);
-        setTimeout(() => { this.bottleSound.pause(); }, 400);
+        setTimeout(() => { delete this.x }, 200);        
     }
 }

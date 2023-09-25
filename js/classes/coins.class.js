@@ -18,12 +18,14 @@ class Coins extends DrawableObject{
         this.height = 100;
         this.x = x;
         this.y = y;
-        // this.x = 200 + (Math.random()* 2000); 
-        // this.y = 200 + (Math.random()* 200); 
         this.loadImages(this.IMAGES);
         this.animate();
     }
 
+
+    /**
+     * starts animation interval
+     */
     animate(){
         startInterval(() => {
             this.playAnimation(this.IMAGES)

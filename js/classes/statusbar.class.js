@@ -52,19 +52,30 @@ class Statusbar extends DrawableObject {
         this.width = 180;                
     }
 
-
+    /**
+     * loads Image depending of the percentage of the bar
+     * @param {*} percentage 
+     */
     setPercentage(percentage){
         this.percentage = percentage;
         let path = this.Images[this.getImageIndex()];   
         this.img = this.imgCache[path];        
     }
 
+    /**
+     * loads Image depending of the percentage of the bar
+     * @param {*} amount
+     */
     addBottle(amount){
         this.amount = amount;
         let path = this.Images[this.getBottleIndex()];   
         this.img = this.imgCache[path];  
     }
 
+    /**
+     * 
+     * @returns number, depending of amount
+     */
     getBottleIndex(){
         if(this.amount == 0){
             return 0;
@@ -81,6 +92,10 @@ class Statusbar extends DrawableObject {
         }
     }
 
+    /**
+     * 
+     * @returns number, depending of percentage
+     */
     getImageIndex(){
         if(this.percentage == 100){
             return 0;

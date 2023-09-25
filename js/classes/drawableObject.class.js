@@ -7,12 +7,21 @@ class DrawableObject{
     imgCache = [];
     currentImg = 0;
 
-
+    /**
+     * create new imageVariable and load Image in
+     * 
+     * @param {*} path img-path of an Image
+     */
     loadImage(path){
         this.img = new Image;
         this.img.src = path;
     }
 
+    /**
+     * create and imgCache and loads in all Images of an array
+     * 
+     * @param {*} arr array with Images
+     */
     loadImages(arr){        
     arr.forEach((path) => {            
         let img = new Image();
@@ -21,10 +30,21 @@ class DrawableObject{
         });
     }
     
+    /**
+     * draw Image on canvas
+     * 
+     * @param {*} ctx canvas on which Images become drawn
+     */
     draw(ctx){
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+
+    /**
+     * draws Frames around Images
+     * 
+     * @param {*} ctx 
+     */
     drawFrame(ctx){
         if (this instanceof Brick || this instanceof Character || this instanceof ChickenSmall || this instanceof Chicken || this instanceof Coins || this instanceof Bottle || this instanceof ThrowableObject || this instanceof BottleBottom || this instanceof Endboss){
             ctx.beginPath();
@@ -35,7 +55,11 @@ class DrawableObject{
         }
     }
 
-    
+    /**
+     * calcs modulo to choose Image of array and save it in a variable
+     * 
+     * @param {*} images array with Images
+     */
     playAnimation(images){
         let i = this.currentImg % images.length;        // i = 0/6 =>  R0
         // i = 1/6 => R1, da 1/6 = 0.166 => 0 R1 bis zur 1

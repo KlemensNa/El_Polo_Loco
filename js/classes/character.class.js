@@ -47,11 +47,12 @@ class Character extends MovableObject {
 
     ]
 
-    world;                                 // Variable in der alle varaiablen vom Object World gespecihert sind (s. Klasse World)
+    world;  // Variable in der alle varaiablen vom Object World gespeichert sind (s. Klasse World)
     walking_sound = new Audio('audio/running.mp3');
     hitSound = new Audio('audio/autsch.mp3');
     bossSound = new Audio('audio/hahn.mp3');
-    loseSound = new Audio('audio/loseSound.mp3')
+    loseSound = new Audio('audio/loseSound.mp3');
+    hurted = false;
     keyPushed;
     offset = {
         top: 110,
@@ -81,6 +82,10 @@ class Character extends MovableObject {
         sounds.push(this.bossSound);                                                 //fallen zum Boden
     }
 
+
+    /**
+     * starts theintervals for moves, animations and sounds
+     */
     animate() {
         this.moveActions()
         this.AnimationsAndSounds();
@@ -90,7 +95,6 @@ class Character extends MovableObject {
      * 
      * Moving Actions
      */
-
     moveActions() {
         startInterval(() => {
             if (this.canMoveRight())
@@ -108,10 +112,16 @@ class Character extends MovableObject {
         }, 50);
     }
 
+    /**
+     * @returns is key pressed and character not at the end of the level
+     */
     canMoveRight() {
         return keyboard.RIGHT && this.x < this.world.level.level_end_x
     }
 
+    /**
+     * moving right, playing moving sounds and restarts the keyPushedTimer
+     */
     moveRight() {
         super.moveRight();
         if (!sounds[0].muted && !this.isAboveGround()) {
@@ -120,6 +130,10 @@ class Character extends MovableObject {
         this.keyPushed = new Date().getTime();
     }
 
+    /**
+     * move left until the level border
+     * playing moving sounds and restart the keyPushedTimer
+     */
     moveLeft() {
         this.otherDirection = true;
         if (this.x > 200) {
@@ -131,21 +145,39 @@ class Character extends MovableObject {
         this.keyPushed = new Date().getTime();
     }
 
+    /**
+     * pauses walkig sound and restart the soundTime
+     * if char on ground and don't move, load Image[0]
+     */
     stand() {
         this.walking_sound.pause();
         this.walking_sound.currentTime = 0;
+        if(!this.isAboveGround()){
+            this.loadImage(this.IMAGES[0]);
+        }        
     }
 
+    /**
+     * 
+     * @returns is key pressed and character not allready in the air
+     */
     canJump() {
         return (keyboard.SPACE || keyboard.UP) && !this.isAboveGround()
     }
 
+    /**
+     * starts jumpFunction in movableObjects stops moving sounds and restart the keyPushedTimer
+     */
     jump() {
         super.jump(this.coins);
         this.walking_sound.pause();
         this.keyPushed = new Date().getTime();
     }
 
+    /**
+     * 
+     * @returns was key not pushed for some time and character is not dead and hurt
+     */
     canSleep() {
         return this.noKeyPushed() && !this.isDead() && !this.isHurt()
     }
@@ -169,17 +201,21 @@ class Character extends MovableObject {
         }, 150);
     }
 
+    /**
+     * plays deadAnimations, dead sounds, set WinLose boolean to true 
+     */
     deadActions() {
         this.playAnimation(this.IMAGES_DEAD);
         if (!sounds[0].muted){
             this.playDeadSounds();
         };        
-        winLose = true;
-        
+        winLose = true;        
         this.openLosingScreen();
     }
 
-
+    /**
+     * plays losing sound, stops it and plays winning sream of the boss
+     */
     playDeadSounds() {
         this.loseSound.play();
         setTimeout(() => {
@@ -188,7 +224,9 @@ class Character extends MovableObject {
         }, 2000)
     }
 
-
+    /**
+     * opens Endscreen and stops final sounds
+     */
     openLosingScreen() {
         setTimeout(() => {
             openLoseScreen();
@@ -197,20 +235,22 @@ class Character extends MovableObject {
         }, 3500)
     }
 
-
+    /**
+     * starts hurt animation and sound functions
+     */
     hurtAnimations() {
         this.playAnimation(this.IMAGES_HURT);
         this.hurtSounds();
     }
 
-
+    /**
+     * play hurt sounds, set hurtBoolean true and 900ms later back to false
+     */
     hurtSounds(){
-        if (!sounds[0].muted) {
+        if (!sounds[0].muted && !this.hurted) {
             this.hitSound.play();
-            setTimeout(() => {
-                this.hitSound.pause();
-                this.hitSound.currentTime = 0;
-            }, 300);
+            this.hurted = true;
+            setTimeout(() => this.hurted = false, 900);
         }
     }
 }

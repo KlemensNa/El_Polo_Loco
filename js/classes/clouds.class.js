@@ -10,6 +10,9 @@ class Clouds extends MovableObject {
         this.cloudsMove();
     }
 
+    /**
+     * starts moving of clouds in an interval
+     */
     cloudsMove() {
         this.speed = 0.2;
         startInterval(() =>

@@ -14,6 +14,7 @@ class ChickenSmall extends MovableObject {
         left: 11,
     };
     lilChicken = new Audio('audio/küken.mp3');
+    chirped = false;
 
     constructor(x) {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
@@ -27,13 +28,18 @@ class ChickenSmall extends MovableObject {
         sounds.push(this.lilChicken)
     }
 
+    /**
+     * starts several move and sound intervals
+     */
     animate() {
         this.moveLeft();
         this.dieing();
         this.chirpSound();
     }
 
-
+    /**
+     * move interval to move left and animate the moves
+     */
     moveLeft() {
         startInterval(() => {
             if (!this.isDead()) {
@@ -43,6 +49,9 @@ class ChickenSmall extends MovableObject {
         }, 40);
     }
 
+    /**
+     * starts animation if chicken is dead
+     */
     dieing() {
         startInterval(() => {
             if (this.isDead()) 
@@ -50,13 +59,16 @@ class ChickenSmall extends MovableObject {
         }, 150);
     }
 
+    /**
+     * starts chirpsound and set chirpBoolean to true
+     */
     chirpSound() {
         startInterval(() => {
             if (this.isHurt()) {
-                if (!sounds[0].muted){
+                if (!sounds[0].muted && !this.chirped){
                     this.lilChicken.play();
+                    this.chirped = true;
                 }                
-                setTimeout(() => { this.lilChicken.pause() }, 300)
             }
         }, 150)
     }

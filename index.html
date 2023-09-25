@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <link rel="stylesheet" href="style.css">
     <script src="js/classes/world.class.js"></script>
     <script src="js/classes/drawableObject.class.js"></script>
@@ -24,11 +23,12 @@
     <script src="js/classes/level.class.js"></script>    
     <script src="level/level1.js"></script>
     <script src="level/level2.js"></script>
+    <script src="js/keysAndTouch.js"></script>
     <script src="js/game.js"></script>
+    <link rel="icon" type="image/png" href='img/sombrero.png'>
     <title>El Polo Loco</title>
 </head>
 <body onload="loadStartscreenMusic()">
-
     <div id="mainContainer" width="720" height="480">
         <div id="startScreen">
             <div id="startScreenStart" class="startScreenButtons" onclick="initGame()">Start Game</div>
@@ -48,11 +48,11 @@
                 <div class="explantation">Move Right</div>
             </div>
             <div id="settingsJump" class="settingsContainer">
-                <div class="buttonOrItem"><img src="img/10_buttons/up_button.png" alt=""> <b>or</b> "W" <b>or</b> ArrowLeft</div>
+                <div class="buttonOrItem"><img src="img/10_buttons/up_button.png" alt=""> <b>or</b> "W" <b>or</b> ArrowLeft <b>or</b> Space</div>
                 <div class="explantation">Jump</div>
             </div>
             <div id="settingsThrow" class="settingsContainer">
-                <div class="buttonOrItem">ThrowButton <b>or</b> "E" <b>or</b> Space</div>
+                <div class="buttonOrItem">ThrowButton <b>or</b> "E" <b>or</b></div>
                 <div class="explantation">Throw Bottle</div>
             </div>
             <div id="settingsItemsDescriptions" class="settingsContainer">
@@ -77,7 +77,7 @@
             </div>
             <div id="settingsBoss" class="settingsContainer">
                 <div class="buttonOrItem" id="bossPic"><img src="img/4_enemie_boss_chicken/1_walk/G1.png" alt=""></div>
-                <div class="explantation">surprise surprise</div>
+                <div class="explantation">Surprise surprise</div>
             </div>
             <div id="getBackToStartscreen" onclick="toggleDescriptions()">BACK</div>
         </div>

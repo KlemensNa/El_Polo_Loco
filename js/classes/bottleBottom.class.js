@@ -17,12 +17,14 @@ class BottleBottom extends MovableObject {
         this.width = 70;
         this.height = 70;
         this.x = x;
-        // this.x = 200 + (Math.random()* 2000); 
         this.y = 430 - this.height;
         this.loadImages(this.IMAGES);
         this.animate();
     }
 
+    /**
+     * Animations of the Bottle on the ground
+     */
     animate() {
         startInterval(() => this.playAnimation(this.IMAGES), 700);
     }

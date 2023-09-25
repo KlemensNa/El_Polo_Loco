@@ -21,13 +21,5 @@ class Bottle extends DrawableObject{
         this.height = 70;
         this.y = 300;
         this.x = x;
-        // this.x = 200 + (Math.random()* 2600); 
-        // this.y = 650 - this.height; 
-        // this.loadImages(this.IMAGES);
-        // this.animate();
-    }
-
-    animate(){
-        startInterval(() => this.playAnimation(this.IMAGES), 300);
-    }
+    }    
 }
